@@ -641,6 +641,16 @@ textarea{resize:vertical;min-height:88px}
           </div>
         </div>
 
+        <div class="fg" style="margin-top:16px">
+          <label>썸네일 이미지 (선택)</label>
+          <div class="file-drop" id="dlThumbDrop">
+            <input type="file" id="dlThumbFile" accept="image/*" onchange="pickDlThumb()">
+            <div class="file-drop-icon">🖼️</div>
+            <div class="file-drop-text" id="dlThumbLabel">툴 스크린샷, 미리보기 이미지 등</div>
+          </div>
+          <img id="dlThumbPreview" style="display:none;width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:8px">
+        </div>
+
         <div style="margin-top:16px;border:1.5px solid var(--border);border-radius:12px;overflow:hidden">
           <div style="display:grid;grid-template-columns:1fr 1fr">
             <button id="dlTabFile" onclick="switchDlTab('file')" style="padding:10px;border:none;background:var(--pink);color:#fff;font-size:12px;font-weight:700;cursor:pointer">📁 파일 직접 업로드</button>
@@ -767,11 +777,11 @@ textarea{resize:vertical;min-height:88px}
 // ─── 상태 ───────────────────────────────────────────────
 // <!--SITE_DATA_START-->
 const CFG = {
-  "pw": "141712",
+  "pw": "040206",
   "name": "HUNTER",
   "email": "usagi_0423",
   "bio1": "저는 버튜버 댄스 영상을 만들고있는 크리에이터입니다.",
-  "bio2": "이것저것 만들고 있는것도 있어요",
+  "bio2": "",
   "aboutHeading": "당신은 귀여운 토끼에요",
   "photo": "images/img_01_c391fd34.webp"
 };
@@ -793,15 +803,6 @@ let portfolio = [
     "filePath": null,
     "videoId": null,
     "thumb": "images/img_03_c4863f03.webp"
-  },
-  {
-    "id": 1784220455307,
-    "title": "모지오님",
-    "desc": "캐치캐치",
-    "ytUrl": "https://youtube.com/shorts/552p-hniWTs?si=vh_FH1E_u02dhQWv",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220470320_1.webp"
   },
   {
     "id": 1778161601725,
@@ -973,36 +974,43 @@ let portfolio = [
     "filePath": null,
     "videoId": null,
     "thumb": "images/img_22_3234d9c8.webp"
-  },
-  {
-    "id": 1784220056652,
-    "title": "shape of you",
-    "desc": "청순 섹시",
-    "ytUrl": "https://youtube.com/shorts/zmBkl5XAUcc?si=N5H2hG9tEdkSvTKr",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220254590_1.webp"
-  },
-  {
-    "id": 1784220213956,
-    "title": "BANG BNAG",
-    "desc": "뱅뱅",
-    "ytUrl": "https://youtube.com/shorts/lv7B8KAyD_Q?si=vGhEN_7l04bjj88E",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220256222_2.webp"
-  },
-  {
-    "id": 1784220250063,
-    "title": "Mantra",
-    "desc": "신호등앞에서",
-    "ytUrl": "https://youtube.com/shorts/lZZ2ceVatF0?si=BXFvltu8iqEfoVh_",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220257872_3.webp"
   }
 ];
-let shop = [];
+let shop = [
+  {
+    "id": 1778164060438,
+    "title": "Shape of you",
+    "desc": "제이플라님이 커버하신 shape of you 을 바탕으로 하여 역동적인 카메라 구성이 포인트로 제작된 영상입니다",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/Shape_of_you.mp4",
+    "videoId": null,
+    "thumb": "images/img_23_522a67ea.webp"
+  },
+  {
+    "id": 1778164609504,
+    "title": "BANG_BNAG",
+    "desc": "아이브님들에 BANG_BNAG 을 최대한 강렬하고 임팩트있게 카메라 구성 및 표정까지 구성하여 제작 된 영상입니다.",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/BANG_BNAG.mp4",
+    "videoId": null,
+    "thumb": "images/img_24_ad161b86.webp"
+  },
+  {
+    "id": 1778164767414,
+    "title": "Mantra",
+    "desc": "제니님의 Mantra 를 댄스안무를 최대한 독복적이게 살릴수 있도록 노력하여 만든 영상입니다.",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/Mantra.mp4",
+    "videoId": null,
+    "thumb": "images/img_25_eb974bf5.webp"
+  }
+];
 let bgItems = [
   {
     "id": 1778410084466,
@@ -1373,7 +1381,7 @@ let bgItems = [
     ]
   }
 ];
-let shopComingSoonOn = true;
+let shopComingSoonOn = false;
 let dlItems = [];
 // <!--SITE_DATA_END-->
 
@@ -2391,6 +2399,23 @@ function pickDlFile() {
   document.getElementById('dlFileLabel').textContent = `✓ ${f.name} (${(f.size/1024/1024).toFixed(1)}MB)`;
 }
 
+let dlThumbData = null;
+function pickDlThumb() {
+  const f = document.getElementById('dlThumbFile').files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = async e => {
+    let data = e.target.result;
+    try { data = await compressDataUrl(data, 800); } catch(err) {}
+    dlThumbData = data;
+    const preview = document.getElementById('dlThumbPreview');
+    preview.src = data;
+    preview.style.display = 'block';
+    document.getElementById('dlThumbLabel').textContent = '✓ ' + f.name;
+  };
+  reader.readAsDataURL(f);
+}
+
 function addDlItem() {
   const title    = document.getElementById('dlTitle').value.trim();
   const desc     = document.getElementById('dlDesc').value.trim();
@@ -2401,7 +2426,7 @@ function addDlItem() {
   if (dlTabMode === 'url') {
     const url = document.getElementById('dlUrl').value.trim();
     if (!url) { toast('URL을 입력해주세요'); return; }
-    dlItems.push({ id: Date.now(), title, desc, version, category, url, fileName: null, fileData: null });
+    dlItems.push({ id: Date.now(), title, desc, version, category, url, fileName: null, fileData: null, thumb: dlThumbData });
     renderDlGrid(); renderDlAdminList();
     resetDlForm();
     toast(`"${title}" 추가됐어요 ✓`);
@@ -2410,7 +2435,7 @@ function addDlItem() {
     const f = dlFileObj;
     const reader = new FileReader();
     reader.onload = e => {
-      dlItems.push({ id: Date.now(), title, desc, version, category, url: null, fileName: f.name, fileData: e.target.result });
+      dlItems.push({ id: Date.now(), title, desc, version, category, url: null, fileName: f.name, fileData: e.target.result, thumb: dlThumbData });
       renderDlGrid(); renderDlAdminList();
       resetDlForm();
       toast(`"${title}" 추가됐어요 ✓`);
@@ -2427,6 +2452,10 @@ function resetDlForm() {
   document.getElementById('dlFileLabel').textContent = 'zip, unitypackage, exe 등 선택';
   document.getElementById('dlFile').value = '';
   dlFileObj = null;
+  dlThumbData = null;
+  document.getElementById('dlThumbFile').value = '';
+  document.getElementById('dlThumbPreview').style.display = 'none';
+  document.getElementById('dlThumbLabel').textContent = '툴 스크린샷, 미리보기 이미지 등';
 }
 
 function delDlItem(idx) {
@@ -2463,7 +2492,9 @@ function renderDlGrid() {
     card.onmouseover = () => { card.style.transform='translateY(-3px)'; card.style.boxShadow='0 10px 30px rgba(0,0,0,.08)'; };
     card.onmouseout  = () => { card.style.transform=''; card.style.boxShadow=''; };
 
+    card.style.overflow = 'hidden';
     card.innerHTML = `
+      ${v.thumb ? `<img src="${v.thumb}" loading="lazy" style="width:calc(100% + 48px);margin:-24px -24px 4px;height:170px;object-fit:cover">` : ''}
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:28px">${categoryIcon[v.category] || '📦'}</span>
@@ -2501,7 +2532,7 @@ function renderDlAdminList() {
   el.innerHTML = dlItems.map((v, i) => `
     <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:8px">
       <div style="display:flex;align-items:center;gap:8px;min-width:0">
-        <span style="font-size:16px">${categoryIcon[v.category]||'📦'}</span>
+        ${v.thumb ? `<img src="${v.thumb}" style="width:36px;height:36px;object-fit:cover;border-radius:8px;flex-shrink:0">` : `<span style="font-size:16px">${categoryIcon[v.category]||'📦'}</span>`}
         <div style="min-width:0">
           <p style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.title)}</p>
           <p style="font-size:10px;color:var(--muted)">${v.category}${v.version?' · '+esc(v.version):''}${v.url?' · 외부링크':' · 직접파일'}</p>
@@ -2570,6 +2601,7 @@ async function convertPendingAssets(token, username, repo, status) {
       if (!im.isVideo && isData(im.url)) im.url = await upImg(im.url, 1280);
 
   for (const d of dlItems) {
+    if (isData(d.thumb)) d.thumb = await upImg(d.thumb, 800);
     if (isData(d.fileData)) {
       const b64 = d.fileData.split(',')[1];
       const sizeMB = b64.length * 0.75 / 1024 / 1024;
