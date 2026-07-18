@@ -420,7 +420,15 @@ textarea{resize:vertical;min-height:88px}
   <p class="sec-label">Downloads</p>
   <h2 class="sec-title" style="margin-bottom:8px">다운로드</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:40px">제작한 유니티 툴 및 기타 파일을 다운로드할 수 있어요.</p>
-  <div id="dlGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px"></div>
+  <div id="dlGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px"></div>
+</div>
+
+<!-- 다운로드 상세 모달 -->
+<div id="dlModal" onclick="if(event.target===this)closeDlModal()" style="display:none;position:fixed;inset:0;z-index:950;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:24px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.25)">
+    <button onclick="closeDlModal()" style="position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,.92);font-size:15px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)">✕</button>
+    <div id="dlModalBody"></div>
+  </div>
 </div>
 
 <!-- ABOUT -->
@@ -781,7 +789,7 @@ const CFG = {
   "name": "HUNTER",
   "email": "usagi_0423",
   "bio1": "저는 버튜버 댄스 영상을 만들고있는 크리에이터입니다.",
-  "bio2": "이것저것 만들어보고도 있어요.",
+  "bio2": "",
   "aboutHeading": "당신은 귀여운 토끼에요",
   "photo": "images/img_01_c391fd34.webp"
 };
@@ -803,15 +811,6 @@ let portfolio = [
     "filePath": null,
     "videoId": null,
     "thumb": "images/img_03_c4863f03.webp"
-  },
-  {
-    "id": 1784220455307,
-    "title": "모지오님",
-    "desc": "캐치캐치",
-    "ytUrl": "https://youtube.com/shorts/552p-hniWTs?si=vh_FH1E_u02dhQWv",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220470320_1.webp"
   },
   {
     "id": 1778161601725,
@@ -983,36 +982,43 @@ let portfolio = [
     "filePath": null,
     "videoId": null,
     "thumb": "images/img_22_3234d9c8.webp"
-  },
-  {
-    "id": 1784220056652,
-    "title": "shape of you",
-    "desc": "청순 섹시",
-    "ytUrl": "https://youtube.com/shorts/zmBkl5XAUcc?si=N5H2hG9tEdkSvTKr",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220254590_1.webp"
-  },
-  {
-    "id": 1784220213956,
-    "title": "BANG BNAG",
-    "desc": "뱅뱅",
-    "ytUrl": "https://youtube.com/shorts/lv7B8KAyD_Q?si=vGhEN_7l04bjj88E",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220256222_2.webp"
-  },
-  {
-    "id": 1784220250063,
-    "title": "Mantra",
-    "desc": "신호등앞에서",
-    "ytUrl": "https://youtube.com/shorts/lZZ2ceVatF0?si=BXFvltu8iqEfoVh_",
-    "filePath": null,
-    "videoId": null,
-    "thumb": "images/up_1784220257872_3.webp"
   }
 ];
-let shop = [];
+let shop = [
+  {
+    "id": 1778164060438,
+    "title": "Shape of you",
+    "desc": "제이플라님이 커버하신 shape of you 을 바탕으로 하여 역동적인 카메라 구성이 포인트로 제작된 영상입니다",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/Shape_of_you.mp4",
+    "videoId": null,
+    "thumb": "images/img_23_522a67ea.webp"
+  },
+  {
+    "id": 1778164609504,
+    "title": "BANG_BNAG",
+    "desc": "아이브님들에 BANG_BNAG 을 최대한 강렬하고 임팩트있게 카메라 구성 및 표정까지 구성하여 제작 된 영상입니다.",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/BANG_BNAG.mp4",
+    "videoId": null,
+    "thumb": "images/img_24_ad161b86.webp"
+  },
+  {
+    "id": 1778164767414,
+    "title": "Mantra",
+    "desc": "제니님의 Mantra 를 댄스안무를 최대한 독복적이게 살릴수 있도록 노력하여 만든 영상입니다.",
+    "price": "30000",
+    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
+    "ytUrl": null,
+    "filePath": "videos/판매영상/Mantra.mp4",
+    "videoId": null,
+    "thumb": "images/img_25_eb974bf5.webp"
+  }
+];
 let bgItems = [
   {
     "id": 1778410084466,
@@ -1383,7 +1389,7 @@ let bgItems = [
     ]
   }
 ];
-let shopComingSoonOn = true;
+let shopComingSoonOn = false;
 let dlItems = [];
 // <!--SITE_DATA_END-->
 
@@ -2490,38 +2496,56 @@ function renderDlGrid() {
   g.innerHTML = '';
   dlItems.forEach((v, i) => {
     const card = document.createElement('div');
-    card.style.cssText = 'background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,box-shadow .2s;position:relative';
-    card.onmouseover = () => { card.style.transform='translateY(-3px)'; card.style.boxShadow='0 10px 30px rgba(0,0,0,.08)'; };
+    card.style.cssText = 'position:relative;aspect-ratio:1/1;border-radius:20px;overflow:hidden;cursor:pointer;border:1.5px solid var(--border);background:linear-gradient(135deg,var(--surface2),#fff);transition:transform .2s,box-shadow .2s';
+    card.onmouseover = () => { card.style.transform='translateY(-4px)'; card.style.boxShadow='0 12px 30px rgba(0,0,0,.12)'; };
     card.onmouseout  = () => { card.style.transform=''; card.style.boxShadow=''; };
+    card.onclick = () => openDlModal(i);
 
-    card.style.overflow = 'hidden';
     card.innerHTML = `
-      ${v.thumb ? `<img src="${v.thumb}" loading="lazy" style="width:calc(100% + 48px);margin:-24px -24px 4px;height:170px;object-fit:cover">` : ''}
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:28px">${categoryIcon[v.category] || '📦'}</span>
-          <div>
-            <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text)">${esc(v.title)}</div>
-            <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
-              <span style="font-size:10px;font-weight:700;color:#fff;background:${categoryColor[v.category]||'#9e9e9e'};padding:2px 9px;border-radius:10px">${v.category}</span>
-              ${v.version ? `<span style="font-size:10px;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:10px">${esc(v.version)}</span>` : ''}
-              <span style="font-size:10px;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:10px">${v.url ? '🔗 외부 링크' : '📁 직접 파일'}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      ${v.desc ? `<p style="font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-line">${esc(v.desc)}</p>` : ''}
-      <button onclick="downloadDlItem(${i})" style="margin-top:4px;padding:12px;background:var(--dark);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">⬇ 다운로드</button>`;
+      ${v.thumb
+        ? `<img src="${v.thumb}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`
+        : `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px">${categoryIcon[v.category] || '📦'}</div>`}
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:40px 15px 13px;background:linear-gradient(transparent,rgba(30,20,25,.6))">
+        <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.35);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.title)}</p>
+      </div>`;
 
     // 삭제 버튼 (관리자)
     const del = document.createElement('button');
     del.textContent = '✕';
     del.className = 'del-btn';
-    del.onclick = () => delDlItem(i);
+    del.onclick = (e) => { e.stopPropagation(); delDlItem(i); };
     card.appendChild(del);
 
     g.appendChild(card);
   });
+}
+
+function openDlModal(i) {
+  const v = dlItems[i];
+  if (!v) return;
+  const body = document.getElementById('dlModalBody');
+  body.innerHTML = `
+    ${v.thumb
+      ? `<img src="${v.thumb}" style="width:100%;height:240px;object-fit:cover;border-radius:24px 24px 0 0;display:block">`
+      : `<div style="height:140px;display:flex;align-items:center;justify-content:center;font-size:60px;background:var(--surface2);border-radius:24px 24px 0 0">${categoryIcon[v.category] || '📦'}</div>`}
+    <div style="padding:24px 26px 26px">
+      <p style="font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--text)">${esc(v.title)}</p>
+      <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+        <span style="font-size:11px;font-weight:700;color:#fff;background:${categoryColor[v.category]||'#9e9e9e'};padding:3px 11px;border-radius:12px">${v.category}</span>
+        ${v.version ? `<span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">${esc(v.version)}</span>` : ''}
+        <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">${v.url ? '🔗 외부 링크' : '📁 직접 파일'}</span>
+      </div>
+      ${v.desc ? `<p style="font-size:13.5px;color:var(--muted);line-height:1.8;white-space:pre-line;margin-top:16px">${esc(v.desc)}</p>` : ''}
+      <button onclick="downloadDlItem(${i})" style="width:100%;margin-top:22px;padding:14px;background:var(--dark);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">⬇ 다운로드</button>
+    </div>`;
+  const m = document.getElementById('dlModal');
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDlModal() {
+  document.getElementById('dlModal').style.display = 'none';
+  document.body.style.overflow = '';
 }
 
 function renderDlAdminList() {
