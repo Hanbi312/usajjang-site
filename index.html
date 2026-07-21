@@ -814,6 +814,15 @@ let portfolio = [
     "thumb": "images/img_03_c4863f03.webp"
   },
   {
+    "id": 1784220455307,
+    "title": "모지오님",
+    "desc": "캐치캐치",
+    "ytUrl": "https://youtube.com/shorts/552p-hniWTs?si=vh_FH1E_u02dhQWv",
+    "filePath": null,
+    "videoId": null,
+    "thumb": "images/up_1784220470320_1.webp"
+  },
+  {
     "id": 1778161601725,
     "title": "ELEVATE",
     "desc": "이세계 아이돌",
@@ -983,43 +992,36 @@ let portfolio = [
     "filePath": null,
     "videoId": null,
     "thumb": "images/img_22_3234d9c8.webp"
-  }
-];
-let shop = [
-  {
-    "id": 1778164060438,
-    "title": "Shape of you",
-    "desc": "제이플라님이 커버하신 shape of you 을 바탕으로 하여 역동적인 카메라 구성이 포인트로 제작된 영상입니다",
-    "price": "30000",
-    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
-    "ytUrl": null,
-    "filePath": "videos/판매영상/Shape_of_you.mp4",
-    "videoId": null,
-    "thumb": "images/img_23_522a67ea.webp"
   },
   {
-    "id": 1778164609504,
-    "title": "BANG_BNAG",
-    "desc": "아이브님들에 BANG_BNAG 을 최대한 강렬하고 임팩트있게 카메라 구성 및 표정까지 구성하여 제작 된 영상입니다.",
-    "price": "30000",
-    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
-    "ytUrl": null,
-    "filePath": "videos/판매영상/BANG_BNAG.mp4",
+    "id": 1784220056652,
+    "title": "shape of you",
+    "desc": "청순 섹시",
+    "ytUrl": "https://youtube.com/shorts/zmBkl5XAUcc?si=N5H2hG9tEdkSvTKr",
+    "filePath": null,
     "videoId": null,
-    "thumb": "images/img_24_ad161b86.webp"
+    "thumb": "images/up_1784220254590_1.webp"
   },
   {
-    "id": 1778164767414,
+    "id": 1784220213956,
+    "title": "BANG BNAG",
+    "desc": "뱅뱅",
+    "ytUrl": "https://youtube.com/shorts/lv7B8KAyD_Q?si=vGhEN_7l04bjj88E",
+    "filePath": null,
+    "videoId": null,
+    "thumb": "images/up_1784220256222_2.webp"
+  },
+  {
+    "id": 1784220250063,
     "title": "Mantra",
-    "desc": "제니님의 Mantra 를 댄스안무를 최대한 독복적이게 살릴수 있도록 노력하여 만든 영상입니다.",
-    "price": "30000",
-    "buyLink": "https://crepe.cm/ko/@UsaJJang/0v4x0kux",
-    "ytUrl": null,
-    "filePath": "videos/판매영상/Mantra.mp4",
+    "desc": "신호등앞에서",
+    "ytUrl": "https://youtube.com/shorts/lZZ2ceVatF0?si=BXFvltu8iqEfoVh_",
+    "filePath": null,
     "videoId": null,
-    "thumb": "images/img_25_eb974bf5.webp"
+    "thumb": "images/up_1784220257872_3.webp"
   }
 ];
+let shop = [];
 let bgItems = [
   {
     "id": 1778410084466,
@@ -1390,8 +1392,42 @@ let bgItems = [
     ]
   }
 ];
-let shopComingSoonOn = false;
-let dlItems = [];
+let shopComingSoonOn = true;
+let dlItems = [
+  {
+    "id": 1784643680466,
+    "title": "Scene Script Finder",
+    "desc": "Unity 씬 내에서 특정 스크립트가 붙어 있는 오브젝트를 빠르게 찾아주는 에디터 툴입니다.\n\n# 설치 방법\n1. `ScriptFinder.cs` 파일을 프로젝트의 `Assets/Editor/` 폴더에 넣습니다.\n* `Editor` 폴더가 없다면 직접 생성하세요.\n2. Unity가 자동으로 컴파일하면 설치 완료입니다.\n\n# 실행 방법\n상단 메뉴에서 **Tools → Script Finder** 를 클릭하거나, 단축키 `Ctrl + Shift + F` 를 누르면 창이 열립니다.\n\n# 검색 방법\n**방법 1 — 스크립트 선택 (드래그 & 드롭)**\n찾고 싶은 스크립트 파일을 정확히 알고 있을 때 사용합니다.\n1. 검색 방식을 \"스크립트 선택\" 으로 설정합니다.\n2. Project 창에서 원하는 스크립트 파일(.cs)을 스크립트 필드에 드래그하여 놓습니다.\n3. 검색 버튼을 클릭합니다.\n\n**방법 2 — 이름으로 검색**\n스크립트 이름의 일부만 기억할 때 사용합니다.\n1. 검색 방식을 \"이름으로 검색\" 으로 전환합니다.\n2. 스크립트 이름의 전체 또는 일부를 입력합니다.\n* 예: `Player`를 입력하면 `PlayerController`, `PlayerHealth`, `PlayerInput` 등 이름에 \"Player\"가 포함된 모든 스크립트가 검색됩니다.\n3. 검색 버튼을 클릭합니다.\n\n**옵션 — 비활성 오브젝트 포함**\n\"비활성 오브젝트도 포함\" 체크박스를 켜면, 씬에서 꺼져 있는(비활성) 오브젝트도 함께 검색합니다. 기본값은 켜져 있습니다.\n\n# 검색 결과 보는 법\n검색이 완료되면 결과 목록이 표시됩니다. 각 항목에는 다음 정보가 포함됩니다.\n* 활성 상태 아이콘: ✅ 활성 / ⬜ 비활성\n* 오브젝트 이름: 클릭하면 Hierarchy 창에서 해당 오브젝트가 선택됩니다.\n* 경로: 오브젝트의 전체 계층 경로 (예: `Canvas / Panel / Button`)\n* 스크립트: 검색에 매칭된 컴포넌트 이름\n* 선택 버튼: 클릭하면 오브젝트를 선택하고 Scene View 카메라가 해당 오브젝트로 이동합니다.\n\n# 이런 상황에서 활용하세요\n* **프로젝트 인수인계 · 합류 시** — 특정 기능을 담당하는 스크립트가 어느 오브젝트에 붙어 있는지 빠르게 파악할 수 있습니다.\n* **리팩토링 전 영향 범위 확인** — 스크립트를 수정·삭제하기 전에 사용 중인 오브젝트 수를 미리 확인하여 사이드 이펙트를 방지합니다.\n* **디버깅** — 버그가 발생한 스크립트가 붙은 모든 오브젝트를 한눈에 확인하고 문제 지점을 좁힐 수 있습니다.\n* **중복 컴포넌트 정리** — 같은 스크립트가 의도치 않게 여러 오브젝트에 붙어 있는 경우를 찾아 정리할 수 있습니다.\n* **비활성 오브젝트 관리** — 꺼져 있어 보이지 않는 오브젝트까지 검색하여 숨겨진 설정을 발견할 수 있습니다.\n* **대형 씬 작업** — 오브젝트가 수백~수천 개인 씬에서도 Hierarchy를 펼쳐보지 않고 즉시 찾을 수 있습니다.\n\n# 참고 사항\n* 이 툴은 현재 활성화된 씬만 검색합니다. 다른 씬을 검색하려면 해당 씬을 먼저 열어주세요.\n* 컴파일 에러가 있는 스크립트는 \"스크립트 선택\" 모드에서 검색되지 않을 수 있습니다. 이 경우 \"이름으로 검색\" 모드를 사용하세요.\n* 검색 결과는 계층 경로 기준으로 알파벳 순 정렬됩니다.\n* Console 창에도 검색 결과 요약 로그가 출력됩니다.",
+    "version": "v1.0.0",
+    "category": "Unity 툴",
+    "url": "https://drive.google.com/drive/folders/1XsVlFCavMdD28iss69pBqPbwUVSCrZGL?usp=sharing",
+    "fileName": null,
+    "fileData": null,
+    "thumb": "images/up_1784643832832_1.webp"
+  },
+  {
+    "id": 1784643717093,
+    "title": "Batch Rename Tool",
+    "desc": "Unity Hierarchy에서 선택한 오브젝트와 그 모든 자식 오브젝트의 이름에 접미사(Suffix)를 한 번에 일괄 적용해주는 에디터 툴입니다.\n\n# 설치 방법\n1. `BatchRenameToolEditor.cs` 파일을 프로젝트의 `Assets/Editor/` 폴더에 넣습니다.\n* `Editor` 폴더가 없다면 직접 생성하세요.\n2. Unity가 자동으로 컴파일하면 설치 완료입니다.\n\n# 실행 방법\n상단 메뉴에서 **Tools → Batch Rename Tool** 을 클릭하면 창이 열립니다.\n\n# 사용 방법\n**1단계 — 오브젝트 선택**\nHierarchy 창에서 이름을 바꾸고 싶은 부모 오브젝트를 클릭하여 선택합니다.\n* 툴 창 상단 \"선택된 오브젝트\" 필드에 현재 선택된 오브젝트가 표시됩니다.\n* 바로 아래에 자식 오브젝트가 총 몇 개인지 자동으로 표시됩니다.\n\n**2단계 — 접미사 입력**\n\"접미사 (Suffix)\" 입력란에 이름 뒤에 붙일 텍스트를 입력합니다.\n* 예: `_02`, `_copy`, `_v2`, `_backup`\n* 기본값은 `_02`로 설정되어 있습니다.\n* 입력과 동시에 미리보기가 실시간으로 갱신됩니다.\n\n**3단계 — 옵션 설정**\n필요에 따라 아래 옵션을 조절합니다. (기본값은 모두 ✅ 켜짐)\n* **부모 오브젝트 포함** — 선택한 오브젝트 자체의 이름도 변경합니다.\n* **자식 오브젝트 포함** — 모든 하위 자식(손자, 증손자 포함)의 이름도 변경합니다.\n* **미리보기 표시** — 적용 전 변경될 이름 목록을 미리 확인합니다.\n\n**4단계 — 미리보기 확인**\n\"미리보기\" 영역에서 적용 후 바뀔 이름을 계층 구조 형태로 확인합니다.\n* 예: `Player → Player_02`, `└ Body → Body_02`, `└ Head → Head_02`\n* 회색으로 표시된 이름이 현재 이름, 파란색 굵은 텍스트가 변경될 이름입니다.\n* 들여쓰기로 계층 깊이를 확인할 수 있고, 하단에 총 변경 항목 수가 표시됩니다.\n\n**5단계 — 적용**\n\"✅ 접미사 일괄 적용\" 버튼을 클릭하면 즉시 모든 이름이 변경됩니다.\n* 완료되면 Console 창에 변경된 오브젝트 수와 사용된 접미사가 로그로 출력됩니다.\n* 오브젝트를 선택하지 않았거나 접미사가 비어 있으면 버튼이 비활성화됩니다.\n\n# 실행 취소 (Undo)\n적용 후 `Ctrl + Z` 를 누르거나 툴 창 하단의 \"↺ Undo (이전 이름으로)\" 버튼을 클릭하면 변경된 모든 이름이 한 번에 되돌아갑니다.\n* 여러 오브젝트의 이름 변경이 하나의 Undo 동작으로 묶여 있어, 한 번에 전부 취소됩니다.\n\n# 이런 상황에서 활용하세요\n* **버전 구분** — 같은 구조의 오브젝트가 여러 버전으로 존재할 때 `_01`, `_02`, `_v2` 접미사로 씬 내에서 쉽게 구분할 수 있습니다.\n* **오브젝트 복제 후 구분** — `Ctrl + D`로 복제한 복사본 전체에 `_copy`, `_backup`을 일괄 적용할 수 있습니다.\n* **임시 비교용 오브젝트 관리** — A/B 테스트용 임시 그룹에 `_test`, `_old`를 붙여 본 작업물과 명확히 분리할 수 있습니다.\n* **팀 협업 중 담당자 표시** — 작업 중인 그룹에 `_WIP`, `_진수` 같은 접미사를 붙여 작업 범위를 구분할 수 있습니다.\n* **네이밍 컨벤션 일괄 적용** — 신규 에셋이나 프리팹에 프로젝트 컨벤션에 맞는 접미사를 한 번에 붙여 정리할 수 있습니다.\n\n# 참고 사항\n* 이 툴은 이름 뒤에 접미사를 추가하는 방식으로만 동작합니다. 기존 이름 교체나 접두사 추가는 지원하지 않습니다.\n* 자식 탐색은 재귀적으로 동작하여 손자, 증손자 등 모든 하위 계층을 빠짐없이 포함합니다.\n* Hierarchy에서 선택이 바뀌면 미리보기가 자동으로 갱신됩니다.\n* 이 툴은 에디터 전용입니다. 런타임에는 동작하지 않으며, 빌드에도 포함되지 않습니다.\n* 변경 사항은 씬 파일에 즉시 반영되므로, 적용 후 씬을 저장하면 영구 적용됩니다.",
+    "version": "",
+    "category": "Unity 툴",
+    "url": "https://drive.google.com/drive/folders/1djeYI92Qa3c7x3ta1cEbcSQMprQT6-IH?usp=sharing",
+    "fileName": null,
+    "fileData": null,
+    "thumb": "images/up_1784643834229_2.webp"
+  },
+  {
+    "id": 1784643828893,
+    "title": "Kommit",
+    "desc": "맥용 커미션및 일정관리 어플",
+    "version": "v1.0.0",
+    "category": "기타",
+    "url": "https://hazel-ethernet-e4d.notion.site/Kommit-34c4fac060b6804b9fa1d86518244f75?pvs=143",
+    "fileName": null,
+    "fileData": null,
+    "thumb": "images/up_1784643835642_3.webp"
+  }
+];
 // <!--SITE_DATA_END-->
 
 let pFile = null, sFile = null;
