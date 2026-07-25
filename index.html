@@ -335,12 +335,6 @@ textarea{resize:vertical;min-height:88px}
           </div>
         </div>
         <p style="font-size:12px;font-weight:700;color:var(--text);text-align:center;background:var(--pink-pale);border:1px solid var(--border);border-radius:20px;padding:5px 14px;width:100%;box-sizing:border-box">예시 구매 영상</p>
-        <div class="admin-mode" style="width:100%">
-          <div class="file-drop" style="padding:10px">
-            <input type="file" accept="video/*" onchange="uploadExample(0,this)">
-            <div class="file-drop-text" id="exLabel0" style="font-size:11px">📁 예시 영상 1 업로드</div>
-          </div>
-        </div>
       </div>
 
       <!-- 예시 영상 2 -->
@@ -358,12 +352,6 @@ textarea{resize:vertical;min-height:88px}
           </div>
         </div>
         <p style="font-size:12px;font-weight:700;color:var(--text);text-align:center;background:var(--pink-pale);border:1px solid var(--border);border-radius:20px;padding:5px 14px;width:100%;box-sizing:border-box">구매자분의 모델로 변경 후 제작된 영상</p>
-        <div class="admin-mode" style="width:100%">
-          <div class="file-drop" style="padding:10px">
-            <input type="file" accept="video/*" onchange="uploadExample(1,this)">
-            <div class="file-drop-text" id="exLabel1" style="font-size:11px">📁 예시 영상 2 업로드</div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -507,7 +495,7 @@ textarea{resize:vertical;min-height:88px}
         </div>
         <div class="divider">또는</div>
         <div class="fg">
-          <label>③ 파일 직접 업로드 <span style="color:var(--muted);font-size:10px">(새로고침 시 사라짐)</span></label>
+          <label>③ 파일 직접 업로드 <span style="color:var(--pink);font-size:10px">(25MB 이하, 자동 저장·배포)</span></label>
           <div class="file-drop" id="pDrop">
             <input type="file" id="pFile" accept="video/*" onchange="pickFile('p')">
             <div class="file-drop-icon">🎬</div>
@@ -542,6 +530,28 @@ textarea{resize:vertical;min-height:88px}
           </div>
           <button id="comingSoonToggleBtn" onclick="toggleComingSoon()" style="padding:8px 18px;border-radius:20px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;background:var(--surface2);color:var(--muted)">OFF</button>
         </div>
+
+        <!-- 예시 영상 업로드 -->
+        <div style="background:var(--pink-pale);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:24px">
+          <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px">🎬 예시 영상</p>
+          <p style="font-size:11px;color:var(--muted);margin-bottom:12px">판매 영상 페이지 상단에 표시되는 예시 영상 2개예요 (각 25MB 이하)</p>
+          <div class="fg" style="margin-bottom:10px">
+            <label>예시 구매 영상</label>
+            <div class="file-drop" style="padding:14px">
+              <input type="file" accept="video/*" onchange="uploadExample(0,this)">
+              <div class="file-drop-icon" style="font-size:20px;margin-bottom:3px">📁</div>
+              <div class="file-drop-text" id="exLabel0">예시 영상 1 업로드</div>
+            </div>
+          </div>
+          <div class="fg" style="margin:0">
+            <label>구매자분의 모델로 변경 후 제작된 영상</label>
+            <div class="file-drop" style="padding:14px">
+              <input type="file" accept="video/*" onchange="uploadExample(1,this)">
+              <div class="file-drop-icon" style="font-size:20px;margin-bottom:3px">📁</div>
+              <div class="file-drop-text" id="exLabel1">예시 영상 2 업로드</div>
+            </div>
+          </div>
+        </div>
         <p style="font-size:12px;color:var(--muted);margin-bottom:18px">판매할 영상 정보를 입력하세요</p>
         <div class="fg"><label>영상 제목 *</label><input type="text" id="sTitle" placeholder="판매 영상 제목"></div>
         <div class="fg"><label>설명</label><textarea id="sDesc" placeholder="영상 상세 설명"></textarea></div>
@@ -553,10 +563,12 @@ textarea{resize:vertical;min-height:88px}
         <div class="fg">
           <label>② 파일 경로 <span style="color:var(--pink);font-size:10px">(폴더째 업로드 시)</span></label>
           <input type="text" id="sPath" placeholder="videos/preview1.mp4">
+          <p style="font-size:11px;color:var(--muted);margin-top:6px">📁 GitHub 레포에 <code>videos</code> 폴더를 만들고 영상을 올린 뒤, 그 상대경로를 입력하세요 (예: videos/preview1.mp4)</p>
+          <button type="button" onclick="testPathVideo('sPath')" style="margin-top:8px;width:100%;padding:8px;background:#fce8f0;border:1.5px solid #e8789a;color:#e8789a;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px">▶ 이 경로로 재생 테스트</button>
         </div>
         <div class="divider">또는</div>
         <div class="fg">
-          <label>③ 파일 직접 업로드 <span style="color:var(--muted);font-size:10px">(새로고침 시 사라짐)</span></label>
+          <label>③ 파일 직접 업로드 <span style="color:var(--pink);font-size:10px">(25MB 이하, 자동 저장·배포)</span></label>
           <div class="file-drop" id="sDrop">
             <input type="file" id="sFile" accept="video/*,image/*" onchange="pickFile('s')">
             <div class="file-drop-icon">🎥</div>
@@ -1446,8 +1458,8 @@ function saveData() {
     // 용량 초과 시 큰 base64 값 제외하고 재시도 (배포하면 어차피 정상 저장됨)
     try {
       const stripThumb = t => (t && t.startsWith('http')) ? t : null;
-      const pSave = portfolio.map(v => ({ ...v, thumb: stripThumb(v.thumb) }));
-      const sSave = shop.map(v => ({ ...v, thumb: stripThumb(v.thumb) }));
+      const pSave = portfolio.map(v => ({ ...v, thumb: stripThumb(v.thumb), videoData: null }));
+      const sSave = shop.map(v => ({ ...v, thumb: stripThumb(v.thumb), videoData: null }));
       const cfgSave = { ...CFG };
       ['photo', 'example1', 'example2'].forEach(k => {
         if (cfgSave[k] && !cfgSave[k].startsWith('http')) cfgSave[k] = null;
@@ -1512,7 +1524,8 @@ function thumbHtml(item, cls) {
       onerror="this.src='https://img.youtube.com/vi/${id}/hqdefault.jpg'"
       alt="${item.title}" loading="lazy">`;
   }
-  if (item.filePath) return `<video class="${cls}" src="${item.filePath}" muted preload="metadata"></video>`;
+  if (item.filePath) return `<video class="${cls}" src="${item.filePath}" muted preload="metadata" onerror="this.outerHTML='&lt;div class=&quot;vc-placeholder&quot;&gt;🎬&lt;/div&gt;'"></video>`;
+  if (item.videoData) return `<video class="${cls}" src="${item.videoData}" muted preload="metadata"></video>`;
   if (item.videoId && FILES[item.videoId]) return `<video class="${cls}" src="${FILES[item.videoId].url}" muted preload="metadata"></video>`;
   return null;
 }
@@ -1536,7 +1549,7 @@ function videoCardHtml(v, i, type) {
 
 function shopCardHtml(v, i) {
   const th = thumbHtml(v, '');
-  const hasVideo = v.ytUrl || v.filePath || v.videoId;
+  const hasVideo = v.ytUrl || v.filePath || v.videoData || v.videoId;
   const playBtn = hasVideo ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;pointer-events:none;box-shadow:0 4px 16px rgba(232,120,154,.3)"><svg viewBox="0 0 24 24" width="16" height="16"><polygon points="5,3 19,12 5,21" fill="#e8789a"/></svg></div>` : '';
   const thumbClick = hasVideo ? `onclick="playVideo(${i},'s')" style="cursor:pointer"` : '';
   const media = th
@@ -1933,6 +1946,36 @@ function renderShopFull() {
 }
 
 // ─── 영상 재생 ──────────────────────────────────────────
+// ─── 경로 즉시 테스트 재생 (관리자 패널) ─────────────────
+function testPathVideo(inputId) {
+  const path = document.getElementById(inputId).value.trim();
+  if (!path) { toast('먼저 경로를 입력해주세요'); return; }
+  const old = document.getElementById('simplePlayer');
+  if (old) old.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'simplePlayer';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;';
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕ 닫기';
+  closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.15);border:none;color:#fff;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:14px;';
+  closeBtn.onclick = () => overlay.remove();
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  const video = document.createElement('video');
+  video.src = path;
+  video.controls = true; video.autoplay = true; video.playsInline = true;
+  video.style.cssText = 'max-width:min(900px,100%);max-height:80vh;border-radius:8px;background:#000;';
+  video.onerror = () => {
+    video.remove();
+    const msg = document.createElement('p');
+    msg.innerHTML = `❌ <b>${esc(path)}</b> 경로에서 영상을 찾을 수 없어요.<br><span style="font-size:12px;opacity:.7">GitHub 레포에 해당 파일이 실제로 올라가 있는지, 경로 철자가 맞는지 확인해주세요.<br>(지금 미리보기는 로컬 편집 중인 페이지 기준이라, 배포 후에만 정상 확인될 수도 있어요)</span>`;
+    msg.style.cssText = 'color:#fff;text-align:center;line-height:1.8;max-width:500px';
+    overlay.appendChild(msg);
+  };
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(video);
+  document.body.appendChild(overlay);
+}
+
 function playVideo(idx, type) {
   const v = type === 'p' ? portfolio[idx] : shop[idx];
 
@@ -1965,14 +2008,21 @@ function playVideo(idx, type) {
     overlay.remove();
     return;
 
-  } else if (v.filePath || (v.videoId && FILES[v.videoId])) {
-    const src = v.filePath || FILES[v.videoId].url;
+  } else if (v.filePath || v.videoData || (v.videoId && FILES[v.videoId])) {
+    const src = v.filePath || v.videoData || FILES[v.videoId].url;
     const video = document.createElement('video');
     video.src = src;
     video.controls = true;
     video.autoplay = true;
     video.playsInline = true;
     video.style.cssText = 'max-width:min(900px,100%);max-height:85vh;border-radius:8px;background:#000;';
+    video.onerror = () => {
+      video.remove();
+      const msg = document.createElement('p');
+      msg.innerHTML = `❌ 영상을 불러오지 못했어요.<br><span style="font-size:12px;opacity:.7">경로: ${esc(src)}<br>GitHub에 파일이 실제로 있는지, 경로 철자가 맞는지 확인해주세요.</span>`;
+      msg.style.cssText = 'color:#fff;text-align:center;line-height:1.8;max-width:500px';
+      overlay.appendChild(msg);
+    };
     overlay.appendChild(video);
 
   } else {
@@ -2060,7 +2110,17 @@ function pickFile(prefix) {
 }
 
 // ─── 아이템 추가 ─────────────────────────────────────────
-function addItem(type) {
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function addItem(type) {
+  const MAX_MB = 25;
   if (type === 'p') {
     const title = document.getElementById('pTitle').value.trim();
     const desc  = document.getElementById('pDesc').value.trim();
@@ -2068,12 +2128,15 @@ function addItem(type) {
     const filePath = document.getElementById('pPath').value.trim();
     if (!title) { toast('제목을 입력해주세요'); return; }
     if (!ytUrl && !filePath && !pFile) { toast('유튜브 URL, 파일 경로, 또는 파일을 추가해주세요'); return; }
+    if (pFile && pFile.size > MAX_MB * 1024 * 1024) {
+      toast(`⚠️ 파일이 ${(pFile.size/1024/1024).toFixed(0)}MB예요. ${MAX_MB}MB 이하로 올리거나 유튜브 링크를 이용해주세요.`);
+      return;
+    }
 
-    const item = { id: Date.now(), title, desc, ytUrl: ytUrl || null, filePath: filePath || null, videoId: null, thumb: pThumb || null };
+    const item = { id: Date.now(), title, desc, ytUrl: ytUrl || null, filePath: filePath || null, videoId: null, videoData: null, videoName: null, thumb: pThumb || null };
     if (pFile) {
-      const vid = 'v' + Date.now();
-      FILES[vid] = { file: pFile, url: URL.createObjectURL(pFile) };
-      item.videoId = vid;
+      item.videoData = await readFileAsDataURL(pFile);
+      item.videoName = pFile.name;
     }
     portfolio.push(item);
     saveData(); renderPortfolio(); renderReorder('p');
@@ -2095,12 +2158,15 @@ function addItem(type) {
     const ytUrl    = document.getElementById('sYt').value.trim();
     const filePath = document.getElementById('sPath').value.trim();
     if (!title || !price) { toast('제목과 가격을 입력해주세요'); return; }
+    if (sFile && sFile.size > MAX_MB * 1024 * 1024) {
+      toast(`⚠️ 파일이 ${(sFile.size/1024/1024).toFixed(0)}MB예요. ${MAX_MB}MB 이하로 올리거나 유튜브 링크를 이용해주세요.`);
+      return;
+    }
 
-    const item = { id: Date.now(), title, desc, price, buyLink: buy || null, ytUrl: ytUrl || null, filePath: filePath || null, videoId: null, thumb: sThumb || null };
+    const item = { id: Date.now(), title, desc, price, buyLink: buy || null, ytUrl: ytUrl || null, filePath: filePath || null, videoId: null, videoData: null, videoName: null, thumb: sThumb || null };
     if (sFile) {
-      const vid = 'v' + Date.now();
-      FILES[vid] = { file: sFile, url: URL.createObjectURL(sFile) };
-      item.videoId = vid;
+      item.videoData = await readFileAsDataURL(sFile);
+      item.videoName = sFile.name;
     }
     shop.push(item);
     saveData(); renderShop(); renderReorder('s');
@@ -2715,6 +2781,28 @@ async function convertPendingAssets(token, username, repo, status) {
 
   for (const v of portfolio) if (isData(v.thumb)) v.thumb = await upImg(v.thumb, 800);
   for (const v of shop)      if (isData(v.thumb)) v.thumb = await upImg(v.thumb, 800);
+
+  // 직접 업로드된 영상 파일 (포트폴리오/판매) → videos/ 폴더로 업로드
+  for (const arr of [portfolio, shop]) {
+    for (const v of arr) {
+      if (isData(v.videoData)) {
+        const b64 = v.videoData.split(',')[1];
+        const sizeMB = b64.length * 0.75 / 1024 / 1024;
+        if (sizeMB > 25) {
+          toast(`⚠️ "${v.title}" 영상이 ${sizeMB.toFixed(0)}MB로 너무 커요. 25MB 이하로 올리거나 유튜브 링크를 이용해주세요.`);
+          continue;
+        }
+        n++;
+        status.innerHTML = `🎬 "${v.title}" 영상 업로드 중... (${n}번째)`;
+        const safeName = (v.videoName || 'video.mp4').replace(/[\s/\\]+/g, '_');
+        const path = `videos/${v.id}_${safeName}`;
+        await ghPutFile(path, b64, token, username, repo);
+        v.filePath = path;
+        v.videoData = null;
+      }
+    }
+  }
+
   for (const b of bgItems)
     for (const im of (b.images || []))
       if (!im.isVideo && isData(im.url)) im.url = await upImg(im.url, 1280);
@@ -2823,8 +2911,8 @@ async function buildExportHTML() {
     html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   }
 
-  const pData = portfolio.map(v => ({ id:v.id, title:v.title, desc:v.desc, ytUrl:v.ytUrl, filePath:v.filePath, videoId:null, thumb:v.thumb }));
-  const sData = shop.map(v => ({ id:v.id, title:v.title, desc:v.desc, price:v.price, buyLink:v.buyLink, ytUrl:v.ytUrl, filePath:v.filePath, videoId:null, thumb:v.thumb }));
+  const pData = portfolio.map(v => ({ id:v.id, title:v.title, desc:v.desc, ytUrl:v.ytUrl, filePath:v.filePath, videoId:null, videoData:v.videoData||null, videoName:v.videoName||null, thumb:v.thumb }));
+  const sData = shop.map(v => ({ id:v.id, title:v.title, desc:v.desc, price:v.price, buyLink:v.buyLink, ytUrl:v.ytUrl, filePath:v.filePath, videoId:null, videoData:v.videoData||null, videoName:v.videoName||null, thumb:v.thumb }));
 
   const safeCFG = Object.fromEntries(
     Object.entries(CFG).map(([k,v]) =>
