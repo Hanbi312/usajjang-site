@@ -690,7 +690,8 @@ textarea{resize:vertical;min-height:88px}
           </div>
         </div>
 
-        <button class="submit-btn" onclick="addDlItem()" style="margin-top:16px">+ 다운로드 항목 추가</button>
+        <button class="submit-btn" id="dlSubmitBtn" onclick="addDlItem()" style="margin-top:16px">+ 다운로드 항목 추가</button>
+        <button class="logout-btn" id="dlCancelEditBtn" onclick="cancelDlEdit()" style="display:none;margin-top:8px">수정 취소</button>
 
         <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
           <p class="sec-label" style="margin-bottom:12px">등록된 다운로드 목록</p>
@@ -2566,6 +2567,7 @@ function toast(msg) {
 // ─── 다운로드 페이지 ─────────────────────────────────────
 let dlFileObj = null;
 let dlTabMode = 'file';
+let dlEditIdx = null;
 
 function switchDlTab(mode) {
   dlTabMode = mode;
@@ -2608,25 +2610,91 @@ function addDlItem() {
   const category = document.getElementById('dlCategory').value;
   if (!title) { toast('이름을 입력해주세요'); return; }
 
+  const isEdit   = dlEditIdx !== null;
+  const existing = isEdit ? dlItems[dlEditIdx] : null;
+
   if (dlTabMode === 'url') {
     const url = document.getElementById('dlUrl').value.trim();
     if (!url) { toast('URL을 입력해주세요'); return; }
-    dlItems.push({ id: Date.now(), title, desc, version, category, url, fileName: null, fileData: null, thumb: dlThumbData });
-    renderDlGrid(); renderDlAdminList();
-    resetDlForm();
-    toast(`"${title}" 추가됐어요 ✓`);
+    const item = { id: existing ? existing.id : Date.now(), title, desc, version, category, url, fileName: null, fileData: null, thumb: dlThumbData };
+    if (isEdit) dlItems[dlEditIdx] = item; else dlItems.push(item);
+    finishDlSave(title, isEdit);
   } else {
-    if (!dlFileObj) { toast('파일을 선택해주세요'); return; }
+    if (!dlFileObj) {
+      if (isEdit && existing.fileData) {
+        // 새 파일을 고르지 않았으면 기존 파일을 그대로 유지
+        const item = { id: existing.id, title, desc, version, category, url: null, fileName: existing.fileName, fileData: existing.fileData, thumb: dlThumbData };
+        dlItems[dlEditIdx] = item;
+        finishDlSave(title, isEdit);
+      } else {
+        toast('파일을 선택해주세요');
+      }
+      return;
+    }
     const f = dlFileObj;
     const reader = new FileReader();
     reader.onload = e => {
-      dlItems.push({ id: Date.now(), title, desc, version, category, url: null, fileName: f.name, fileData: e.target.result, thumb: dlThumbData });
-      renderDlGrid(); renderDlAdminList();
-      resetDlForm();
-      toast(`"${title}" 추가됐어요 ✓`);
+      const item = { id: existing ? existing.id : Date.now(), title, desc, version, category, url: null, fileName: f.name, fileData: e.target.result, thumb: dlThumbData };
+      if (isEdit) dlItems[dlEditIdx] = item; else dlItems.push(item);
+      finishDlSave(title, isEdit);
     };
     reader.readAsDataURL(f);
   }
+}
+
+function finishDlSave(title, isEdit) {
+  renderDlGrid(); renderDlAdminList();
+  resetDlForm();
+  dlEditIdx = null;
+  document.getElementById('dlSubmitBtn').textContent = '+ 다운로드 항목 추가';
+  document.getElementById('dlCancelEditBtn').style.display = 'none';
+  toast(isEdit ? `"${title}" 수정됐어요 ✓` : `"${title}" 추가됐어요 ✓`);
+}
+
+function editDlItem(idx) {
+  const v = dlItems[idx];
+  if (!v) return;
+  dlEditIdx = idx;
+
+  document.getElementById('dlTitle').value = v.title || '';
+  document.getElementById('dlDesc').value = v.desc || '';
+  document.getElementById('dlVersion').value = v.version || '';
+  document.getElementById('dlCategory').value = v.category || 'Unity 툴';
+
+  dlThumbData = v.thumb || null;
+  const thumbPreview = document.getElementById('dlThumbPreview');
+  if (v.thumb) {
+    thumbPreview.src = v.thumb;
+    thumbPreview.style.display = 'block';
+    document.getElementById('dlThumbLabel').textContent = '✓ 기존 썸네일 (바꾸려면 새로 선택)';
+  } else {
+    thumbPreview.style.display = 'none';
+    document.getElementById('dlThumbLabel').textContent = '툴 스크린샷, 미리보기 이미지 등';
+  }
+  document.getElementById('dlThumbFile').value = '';
+
+  dlFileObj = null;
+  document.getElementById('dlFile').value = '';
+  if (v.url) {
+    switchDlTab('url');
+    document.getElementById('dlUrl').value = v.url;
+  } else {
+    switchDlTab('file');
+    document.getElementById('dlUrl').value = '';
+    document.getElementById('dlFileLabel').textContent = v.fileName ? `✓ 기존 파일: ${v.fileName} (바꾸려면 새로 선택)` : 'zip, unitypackage, exe 등 선택';
+  }
+
+  document.getElementById('dlSubmitBtn').textContent = '✓ 수정 완료';
+  document.getElementById('dlCancelEditBtn').style.display = 'block';
+  toast('내용을 고친 뒤 "수정 완료"를 눌러주세요');
+  document.getElementById('dlTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function cancelDlEdit() {
+  dlEditIdx = null;
+  resetDlForm();
+  document.getElementById('dlSubmitBtn').textContent = '+ 다운로드 항목 추가';
+  document.getElementById('dlCancelEditBtn').style.display = 'none';
 }
 
 function resetDlForm() {
@@ -2645,6 +2713,8 @@ function resetDlForm() {
 
 function delDlItem(idx) {
   dlItems.splice(idx, 1);
+  if (dlEditIdx === idx) cancelDlEdit();
+  else if (dlEditIdx !== null && dlEditIdx > idx) dlEditIdx--;
   renderDlGrid(); renderDlAdminList();
   toast('삭제됐어요');
 }
@@ -2768,6 +2838,7 @@ function renderDlAdminList() {
           <p style="font-size:10px;color:var(--muted)">${v.category}${v.version?' · '+esc(v.version):''}${v.url?' · 외부링크':' · 직접파일'}</p>
         </div>
       </div>
+      <button onclick="editDlItem(${i})" style="flex-shrink:0;background:var(--pink-pale);border:1px solid var(--border2);color:var(--pink);padding:4px 12px;border-radius:8px;font-size:11px;cursor:pointer">수정</button>
       <button onclick="delDlItem(${i})" style="flex-shrink:0;background:rgba(224,85,85,.15);border:1px solid #e05555;color:#e05555;padding:4px 12px;border-radius:8px;font-size:11px;cursor:pointer">삭제</button>
     </div>`).join('');
 }
