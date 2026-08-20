@@ -76,6 +76,14 @@ section{padding:90px 40px;max-width:1400px;margin:0 auto}
 .del-btn{position:absolute;top:8px;right:8px;background:rgba(224,85,85,.95);border:2px solid #fff;color:#fff;width:30px;height:30px;border-radius:50%;font-size:14px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 .del-btn:hover{background:#c0392b;transform:scale(1.1)}
 .admin-mode .del-btn{display:flex}
+.mot-del-btn{display:none;background:rgba(224,85,85,.12);border:1.5px solid #e05555;color:#e05555;width:26px;height:26px;border-radius:50%;font-size:12px;font-weight:700;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.mot-del-btn:hover{background:#e05555;color:#fff}
+.admin-mode .mot-del-btn{display:inline-flex}
+.mot-table{width:100%;border-collapse:collapse;min-width:560px}
+.mot-table th{text-align:left;padding:14px 18px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);background:var(--pink-pale);white-space:nowrap}
+.mot-table td{padding:14px 18px;border-top:1px solid var(--border);font-size:13px;color:var(--text);white-space:nowrap}
+.mot-table tr.mot-row-click{cursor:pointer}
+.mot-table tr.mot-row-click:hover td{background:var(--pink-pale)}
 
 /* SHOP */
 .shop-wrap{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -401,7 +409,7 @@ textarea{resize:vertical;min-height:88px}
   <h2 class="sec-title" style="margin-bottom:12px">모션</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:32px">보유하고 있는 모션(챌린지) 목록이에요. "판매 영상 제작 내역" 태그가 있는 항목은 클릭하면 실제 제작된 판매 영상을 볼 수 있어요.</p>
 
-  <div id="motList" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div id="motList"></div>
 </div>
 
 <!-- 배경 라이트박스 -->
@@ -1567,216 +1575,7 @@ let dlItems = [
     "thumb": "images/up_1786471737609_1.webp"
   }
 ];
-let motItems = [
-  {
-    "id": 1787252911600,
-    "title": "두번째 지구 - 하데스",
-    "extraCost": false,
-    "remaining": 2,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252927406,
-    "title": "Dash - 플레이브",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252950114,
-    "title": "かくれんぼ (Hide and Seek) - 플레이",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252978264,
-    "title": "왜요? - 플레이브",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252985495,
-    "title": "Golden",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252990933,
-    "title": "SODA POP",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787252998707,
-    "title": "Your idol",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253010373,
-    "title": "멸종위기사랑",
-    "extraCost": false,
-    "remaining": 3,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253015717,
-    "title": "스타게이저",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253031056,
-    "title": "엘리베이트 - 이세돌",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253041989,
-    "title": "Mantra",
-    "extraCost": false,
-    "remaining": 4,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253050080,
-    "title": "BANG BANG",
-    "extraCost": false,
-    "remaining": 4,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253055676,
-    "title": "Catch Catch",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253075206,
-    "title": "파이파이 가면",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253081378,
-    "title": "スキスキDieスキ超Ayeシテル",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253086031,
-    "title": "A Horny Money World",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253094834,
-    "title": "IRIS OUT",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253100023,
-    "title": "비비디바",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253103618,
-    "title": "LEMON LEMON COOKIE",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253108249,
-    "title": "目撃_テト31世",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253112638,
-    "title": "키츠키츠네",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253116922,
-    "title": "마음 예보",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253121871,
-    "title": "우이밭의 파수꾼",
-    "extraCost": false,
-    "remaining": "unlimited",
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253127868,
-    "title": "ZOO",
-    "extraCost": false,
-    "remaining": 4,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253133554,
-    "title": "NO BATIDÃO",
-    "extraCost": false,
-    "remaining": 4,
-    "hasSale": false,
-    "linkedShopId": null
-  },
-  {
-    "id": 1787253139261,
-    "title": "Shape Of You4",
-    "extraCost": false,
-    "remaining": null,
-    "hasSale": false,
-    "linkedShopId": null
-  }
-];
+let motItems = [];
 // <!--SITE_DATA_END-->
 
 let FILES = {};
@@ -2436,26 +2235,34 @@ function renderMotList() {
     g.innerHTML = `<div class="empty"><div class="empty-icon">🎵</div><p class="empty-text">관리자 패널에서 모션을 추가해보세요</p></div>`;
     return;
   }
-  g.innerHTML = motItems.map((v, i) => {
+  const rows = motItems.map((v, i) => {
     const clickable = !!v.hasSale;
     const clickAction = v.linkedShopId ? `goToLinkedShop(${v.linkedShopId})` : `showPage('shop')`;
     return `
-    <div ${clickable ? `onclick="${clickAction}" style="cursor:pointer;position:relative"` : `style="position:relative"`}
-      onmouseover="${clickable ? "this.style.borderColor='var(--pink-light)';this.style.boxShadow='0 8px 24px rgba(232,120,154,.15)'" : ''}"
-      onmouseout="${clickable ? "this.style.borderColor='var(--border)';this.style.boxShadow='none'" : ''}"
-      style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;transition:border-color .2s,box-shadow .2s;position:relative">
-      <button class="del-btn" onclick="event.stopPropagation();delMotItem(${i})">✕</button>
-      <div style="min-width:0;flex:1">
-        <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text)">${esc(v.title)}</p>
-        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
-          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">${v.extraCost ? '💰 추가비용 있음' : '추가비용 없음'}</span>
-          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">남은 제작 ${motRemainingLabel(v)}</span>
-          ${clickable ? `<span style="font-size:11px;font-weight:700;color:#fff;background:var(--pink);padding:3px 11px;border-radius:12px">🏷️ 판매 영상 제작 내역있음</span>` : ''}
-        </div>
-      </div>
-      ${clickable ? `<span style="font-size:12px;color:var(--pink);font-weight:600;flex-shrink:0">보러가기 →</span>` : ''}
-    </div>`;
+    <tr ${clickable ? `class="mot-row-click" onclick="${clickAction}"` : ''}>
+      <td style="font-family:'Playfair Display',serif;font-weight:700">${esc(v.title)}</td>
+      <td style="text-align:center;color:${v.extraCost ? 'var(--pink)' : 'var(--muted)'};font-weight:${v.extraCost ? '700' : '400'}">${v.extraCost ? '💰 있음' : '없음'}</td>
+      <td style="text-align:center;font-weight:600">${motRemainingLabel(v)}</td>
+      <td style="text-align:center">${clickable ? `<span style="font-size:11px;font-weight:700;color:#fff;background:var(--pink);padding:4px 12px;border-radius:12px;white-space:nowrap">🏷️ 보러가기 →</span>` : `<span style="color:var(--muted);font-size:12px">-</span>`}</td>
+      <td style="text-align:center;width:1%"><button class="mot-del-btn" onclick="event.stopPropagation();delMotItem(${i})">✕</button></td>
+    </tr>`;
   }).join('');
+
+  g.innerHTML = `
+    <div style="overflow-x:auto;border:1.5px solid var(--border);border-radius:16px;background:var(--surface)">
+      <table class="mot-table">
+        <thead>
+          <tr>
+            <th>모션 / 챌린지명</th>
+            <th style="text-align:center">추가비용</th>
+            <th style="text-align:center">남은 제작</th>
+            <th style="text-align:center">판매 영상</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 // ─── 렌더 포트폴리오 (메인: 3개) ─────────────────────────
