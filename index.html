@@ -227,6 +227,7 @@ textarea{resize:vertical;min-height:88px}
     <li><a href="#" onclick="showPage('portfolio')">포트폴리오</a></li>
     <li><a href="#" onclick="showPage('shop')">판매 영상</a></li>
     <li><a href="#" onclick="showPage('bg')">배경</a></li>
+    <li><a href="#" onclick="showPage('mot')">모션</a></li>
     <li><a href="#" onclick="showPage('dl')">다운로드</a></li>
     <li><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),100)">소개</a></li>
     <li><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">연락</a></li>
@@ -244,6 +245,7 @@ textarea{resize:vertical;min-height:88px}
   <a href="#" onclick="showPage('portfolio');document.getElementById('mobMenu').classList.remove('open')">포트폴리오</a>
   <a href="#" onclick="showPage('shop');document.getElementById('mobMenu').classList.remove('open')">판매 영상</a>
   <a href="#" onclick="showPage('bg');document.getElementById('mobMenu').classList.remove('open')">배경</a>
+  <a href="#" onclick="showPage('mot');document.getElementById('mobMenu').classList.remove('open')">모션</a>
   <a href="#" onclick="showPage('dl');document.getElementById('mobMenu').classList.remove('open')">다운로드</a>
   <a href="#" onclick="showPage('home');document.getElementById('mobMenu').classList.remove('open');setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),100)">소개</a>
   <a href="#" onclick="showPage('home');document.getElementById('mobMenu').classList.remove('open');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">연락</a>
@@ -367,6 +369,7 @@ textarea{resize:vertical;min-height:88px}
         <li>• 작가의 허락 없이 사용할 경우 저작권법에 의거하여 법적 처벌을 받을 수 있습니다.</li>
         <li>• 구매 후에도 재판매 및 무단 공유는 금지되며, 개인 사용 목적(유튜브 업로드 등)으로만 허용됩니다.</li>
         <li>• 문의 및 구매는 디스코드 <b>usagi_0423</b> 으로 연락해 주세요.</li>
+        <li>• 모든 영상들은 비공개로 되어있으며, 본 홈페이지에서만 영상확인이 가능합니다.</li>
       </ul>
     </div>
   </div>
@@ -389,6 +392,16 @@ textarea{resize:vertical;min-height:88px}
   <!-- 배경 추가는 관리자 패널에서 -->
 
   <div class="video-grid" id="bgGrid"></div>
+</div>
+
+<!-- 모션 리스트 페이지 -->
+<div class="page-view" id="pageMot">
+  <button class="page-back" onclick="showPage('home')">← 홈으로</button>
+  <p class="sec-label">Motion List</p>
+  <h2 class="sec-title" style="margin-bottom:12px">모션</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:32px">보유하고 있는 모션(챌린지) 목록이에요. "판매 영상 제작 내역" 태그가 있는 항목은 클릭하면 실제 제작된 판매 영상을 볼 수 있어요.</p>
+
+  <div id="motList" style="display:flex;flex-direction:column;gap:10px"></div>
 </div>
 
 <!-- 배경 라이트박스 -->
@@ -445,6 +458,7 @@ textarea{resize:vertical;min-height:88px}
     <h2 class="sec-title" style="margin-bottom:12px">작업문의는 디스코드(usagi_0423)으로<br>부탁드립니다.</h2>
     
     <p style="color:var(--muted);font-size:14px;line-height:2">디스코드 : usagi_0423</p>
+    <p style="color:var(--pink);font-size:13px;font-weight:600;margin-top:6px">🎁 지인추천으로 오시면 할인해드리고 있어요!</p>
   </div>
 </div>
 
@@ -476,6 +490,7 @@ textarea{resize:vertical;min-height:88px}
         <button class="atab active" onclick="tab('p')">포트폴리오</button>
         <button class="atab" onclick="tab('s')">판매 영상</button>
         <button class="atab" onclick="tab('bg')">배경</button>
+        <button class="atab" onclick="tab('mot')">모션</button>
         <button class="atab" onclick="tab('dl')">다운로드</button>
         <button class="atab" onclick="tab('set')">설정</button>
       </div>
@@ -556,7 +571,7 @@ textarea{resize:vertical;min-height:88px}
         <div class="fg"><label>영상 제목 *</label><input type="text" id="sTitle" placeholder="판매 영상 제목"></div>
         <div class="fg"><label>설명</label><textarea id="sDesc" placeholder="영상 상세 설명"></textarea></div>
         <div class="fg"><label>가격 (원) *</label><input type="number" id="sPrice" placeholder="50000"></div>
-        <div class="fg"><label>구매 링크 (없으면 이메일 문의)</label><input type="url" id="sBuy" placeholder="https://..."></div>
+        <div class="fg"><label>구매 링크 또는 디스코드 아이디</label><input type="text" id="sBuy" placeholder="https://... 또는 usagi_0423"><p style="font-size:11px;color:var(--muted);margin-top:6px">http로 시작하면 링크 버튼, 아니면 클릭 시 복사되는 문의 버튼이 돼요. 기본값은 자동으로 채워져요.</p></div>
 
         <div class="fg"><label>① 유튜브 미리보기 URL</label><input type="url" id="sYt" placeholder="https://www.youtube.com/watch?v=..."></div>
         <div class="divider">또는</div>
@@ -639,6 +654,48 @@ textarea{resize:vertical;min-height:88px}
         <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
           <p class="sec-label" style="margin-bottom:12px">등록된 배경 목록</p>
           <div id="bgAdminList"></div>
+        </div>
+      </div>
+
+      <!-- 모션 리스트 -->
+      <div class="asec" id="sec-mot">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:18px">보유 모션(챌린지) 목록을 관리하세요. 판매 영상 제작 내역 태그는 목록에서 언제든 켜고 끌 수 있어요.</p>
+
+        <div class="fg"><label>노래(모션 또는 챌린지명) 제목 *</label><input type="text" id="motTitle" placeholder="예: 캐치캐치"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="fg" style="margin:0">
+            <label>추가비용 여부</label>
+            <select id="motExtraCost" style="width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;border-radius:10px">
+              <option value="0">없음</option>
+              <option value="1">있음</option>
+            </select>
+          </div>
+          <div class="fg" style="margin:0"><label>남은 제작 횟수</label><input type="number" id="motRemaining" placeholder="예: 3" min="0"></div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;background:var(--pink-pale);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;margin-top:16px">
+          <div>
+            <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px">🏷️ 판매 영상 제작 내역있음</p>
+            <p style="font-size:11px;color:var(--muted)">켜두면 태그가 붙고, 클릭 시 판매 영상 페이지로 이동해요</p>
+          </div>
+          <button type="button" id="motHasSaleToggleBtn" onclick="toggleMotFormSale()" style="padding:8px 18px;border-radius:20px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;background:var(--surface2);color:var(--muted);flex-shrink:0">OFF</button>
+        </div>
+
+        <div class="fg" id="motLinkedShopWrap" style="display:none;margin-top:12px">
+          <label>연결할 판매 영상</label>
+          <select id="motLinkedShop" style="width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;border-radius:10px">
+            <option value="">선택 안 함 (판매 영상 전체 페이지로 이동)</option>
+          </select>
+          <p style="font-size:11px;color:var(--muted);margin-top:6px">특정 영상을 고르면, 이 모션 클릭 시 그 영상으로 바로 이동·강조돼요</p>
+        </div>
+
+        <button class="submit-btn" id="motSubmitBtn" onclick="addMotItem()" style="margin-top:16px">+ 모션 추가</button>
+        <button class="logout-btn" id="motCancelEditBtn" onclick="cancelMotEdit()" style="display:none;margin-top:8px">수정 취소</button>
+
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+          <p class="sec-label" style="margin-bottom:12px">등록된 모션 목록</p>
+          <div id="motAdminList"></div>
         </div>
       </div>
 
@@ -1085,21 +1142,7 @@ let portfolio = [
     "thumb": "images/up_1784999475400_2.webp"
   }
 ];
-let shop = [
-  {
-    "id": 1787251788341,
-    "title": "테스트",
-    "desc": "테스트",
-    "price": "5000",
-    "buyLink": null,
-    "ytUrl": "https://youtube.com/shorts/yE3cfWLpkVM?si=ZSlR0zOhumWyOwOt",
-    "filePath": null,
-    "videoId": null,
-    "videoData": null,
-    "videoName": null,
-    "thumb": null
-  }
-];
+let shop = [];
 let bgItems = [
   {
     "id": 1778410084466,
@@ -1470,7 +1513,7 @@ let bgItems = [
     ]
   }
 ];
-let shopComingSoonOn = false;
+let shopComingSoonOn = true;
 let dlItems = [
   {
     "id": 1784643680466,
@@ -1478,7 +1521,7 @@ let dlItems = [
     "desc": "Unity 씬 내에서 특정 스크립트가 붙어 있는 오브젝트를 빠르게 찾아주는 에디터 툴입니다.\n\n# 설치 방법\n1. `ScriptFinder.cs` 파일을 프로젝트의 `Assets/Editor/` 폴더에 넣습니다.\n* `Editor` 폴더가 없다면 직접 생성하세요.\n2. Unity가 자동으로 컴파일하면 설치 완료입니다.\n\n# 실행 방법\n상단 메뉴에서 **Tools → Script Finder** 를 클릭하거나, 단축키 `Ctrl + Shift + F` 를 누르면 창이 열립니다.\n\n# 검색 방법\n**방법 1 — 스크립트 선택 (드래그 & 드롭)**\n찾고 싶은 스크립트 파일을 정확히 알고 있을 때 사용합니다.\n1. 검색 방식을 \"스크립트 선택\" 으로 설정합니다.\n2. Project 창에서 원하는 스크립트 파일(.cs)을 스크립트 필드에 드래그하여 놓습니다.\n3. 검색 버튼을 클릭합니다.\n\n**방법 2 — 이름으로 검색**\n스크립트 이름의 일부만 기억할 때 사용합니다.\n1. 검색 방식을 \"이름으로 검색\" 으로 전환합니다.\n2. 스크립트 이름의 전체 또는 일부를 입력합니다.\n* 예: `Player`를 입력하면 `PlayerController`, `PlayerHealth`, `PlayerInput` 등 이름에 \"Player\"가 포함된 모든 스크립트가 검색됩니다.\n3. 검색 버튼을 클릭합니다.\n\n**옵션 — 비활성 오브젝트 포함**\n\"비활성 오브젝트도 포함\" 체크박스를 켜면, 씬에서 꺼져 있는(비활성) 오브젝트도 함께 검색합니다. 기본값은 켜져 있습니다.\n\n# 검색 결과 보는 법\n검색이 완료되면 결과 목록이 표시됩니다. 각 항목에는 다음 정보가 포함됩니다.\n* 활성 상태 아이콘: ✅ 활성 / ⬜ 비활성\n* 오브젝트 이름: 클릭하면 Hierarchy 창에서 해당 오브젝트가 선택됩니다.\n* 경로: 오브젝트의 전체 계층 경로 (예: `Canvas / Panel / Button`)\n* 스크립트: 검색에 매칭된 컴포넌트 이름\n* 선택 버튼: 클릭하면 오브젝트를 선택하고 Scene View 카메라가 해당 오브젝트로 이동합니다.\n\n# 이런 상황에서 활용하세요\n* **프로젝트 인수인계 · 합류 시** — 특정 기능을 담당하는 스크립트가 어느 오브젝트에 붙어 있는지 빠르게 파악할 수 있습니다.\n* **리팩토링 전 영향 범위 확인** — 스크립트를 수정·삭제하기 전에 사용 중인 오브젝트 수를 미리 확인하여 사이드 이펙트를 방지합니다.\n* **디버깅** — 버그가 발생한 스크립트가 붙은 모든 오브젝트를 한눈에 확인하고 문제 지점을 좁힐 수 있습니다.\n* **중복 컴포넌트 정리** — 같은 스크립트가 의도치 않게 여러 오브젝트에 붙어 있는 경우를 찾아 정리할 수 있습니다.\n* **비활성 오브젝트 관리** — 꺼져 있어 보이지 않는 오브젝트까지 검색하여 숨겨진 설정을 발견할 수 있습니다.\n* **대형 씬 작업** — 오브젝트가 수백~수천 개인 씬에서도 Hierarchy를 펼쳐보지 않고 즉시 찾을 수 있습니다.\n\n# 참고 사항\n* 이 툴은 현재 활성화된 씬만 검색합니다. 다른 씬을 검색하려면 해당 씬을 먼저 열어주세요.\n* 컴파일 에러가 있는 스크립트는 \"스크립트 선택\" 모드에서 검색되지 않을 수 있습니다. 이 경우 \"이름으로 검색\" 모드를 사용하세요.\n* 검색 결과는 계층 경로 기준으로 알파벳 순 정렬됩니다.\n* Console 창에도 검색 결과 요약 로그가 출력됩니다.",
     "version": "v1.0.0",
     "category": "Unity 툴",
-    "url": "https://eden-world.net/ko/market/1907",
+    "url": "https://drive.google.com/drive/folders/1XsVlFCavMdD28iss69pBqPbwUVSCrZGL?usp=sharing",
     "fileName": null,
     "fileData": null,
     "thumb": "images/up_1784643832832_1.webp"
@@ -1500,7 +1543,7 @@ let dlItems = [
     "desc": "Unity Hierarchy에서 선택한 오브젝트와 그 모든 자식 오브젝트의 이름에 접미사(Suffix)를 한 번에 일괄 적용해주는 에디터 툴입니다.\n\n# 설치 방법\n1. `BatchRenameToolEditor.cs` 파일을 프로젝트의 `Assets/Editor/` 폴더에 넣습니다.\n* `Editor` 폴더가 없다면 직접 생성하세요.\n2. Unity가 자동으로 컴파일하면 설치 완료입니다.\n\n# 실행 방법\n상단 메뉴에서 **Tools → Batch Rename Tool** 을 클릭하면 창이 열립니다.\n\n# 사용 방법\n**1단계 — 오브젝트 선택**\nHierarchy 창에서 이름을 바꾸고 싶은 부모 오브젝트를 클릭하여 선택합니다.\n* 툴 창 상단 \"선택된 오브젝트\" 필드에 현재 선택된 오브젝트가 표시됩니다.\n* 바로 아래에 자식 오브젝트가 총 몇 개인지 자동으로 표시됩니다.\n\n**2단계 — 접미사 입력**\n\"접미사 (Suffix)\" 입력란에 이름 뒤에 붙일 텍스트를 입력합니다.\n* 예: `_02`, `_copy`, `_v2`, `_backup`\n* 기본값은 `_02`로 설정되어 있습니다.\n* 입력과 동시에 미리보기가 실시간으로 갱신됩니다.\n\n**3단계 — 옵션 설정**\n필요에 따라 아래 옵션을 조절합니다. (기본값은 모두 ✅ 켜짐)\n* **부모 오브젝트 포함** — 선택한 오브젝트 자체의 이름도 변경합니다.\n* **자식 오브젝트 포함** — 모든 하위 자식(손자, 증손자 포함)의 이름도 변경합니다.\n* **미리보기 표시** — 적용 전 변경될 이름 목록을 미리 확인합니다.\n\n**4단계 — 미리보기 확인**\n\"미리보기\" 영역에서 적용 후 바뀔 이름을 계층 구조 형태로 확인합니다.\n* 예: `Player → Player_02`, `└ Body → Body_02`, `└ Head → Head_02`\n* 회색으로 표시된 이름이 현재 이름, 파란색 굵은 텍스트가 변경될 이름입니다.\n* 들여쓰기로 계층 깊이를 확인할 수 있고, 하단에 총 변경 항목 수가 표시됩니다.\n\n**5단계 — 적용**\n\"✅ 접미사 일괄 적용\" 버튼을 클릭하면 즉시 모든 이름이 변경됩니다.\n* 완료되면 Console 창에 변경된 오브젝트 수와 사용된 접미사가 로그로 출력됩니다.\n* 오브젝트를 선택하지 않았거나 접미사가 비어 있으면 버튼이 비활성화됩니다.\n\n# 실행 취소 (Undo)\n적용 후 `Ctrl + Z` 를 누르거나 툴 창 하단의 \"↺ Undo (이전 이름으로)\" 버튼을 클릭하면 변경된 모든 이름이 한 번에 되돌아갑니다.\n* 여러 오브젝트의 이름 변경이 하나의 Undo 동작으로 묶여 있어, 한 번에 전부 취소됩니다.\n\n# 이런 상황에서 활용하세요\n* **버전 구분** — 같은 구조의 오브젝트가 여러 버전으로 존재할 때 `_01`, `_02`, `_v2` 접미사로 씬 내에서 쉽게 구분할 수 있습니다.\n* **오브젝트 복제 후 구분** — `Ctrl + D`로 복제한 복사본 전체에 `_copy`, `_backup`을 일괄 적용할 수 있습니다.\n* **임시 비교용 오브젝트 관리** — A/B 테스트용 임시 그룹에 `_test`, `_old`를 붙여 본 작업물과 명확히 분리할 수 있습니다.\n* **팀 협업 중 담당자 표시** — 작업 중인 그룹에 `_WIP`, `_진수` 같은 접미사를 붙여 작업 범위를 구분할 수 있습니다.\n* **네이밍 컨벤션 일괄 적용** — 신규 에셋이나 프리팹에 프로젝트 컨벤션에 맞는 접미사를 한 번에 붙여 정리할 수 있습니다.\n\n# 참고 사항\n* 이 툴은 이름 뒤에 접미사를 추가하는 방식으로만 동작합니다. 기존 이름 교체나 접두사 추가는 지원하지 않습니다.\n* 자식 탐색은 재귀적으로 동작하여 손자, 증손자 등 모든 하위 계층을 빠짐없이 포함합니다.\n* Hierarchy에서 선택이 바뀌면 미리보기가 자동으로 갱신됩니다.\n* 이 툴은 에디터 전용입니다. 런타임에는 동작하지 않으며, 빌드에도 포함되지 않습니다.\n* 변경 사항은 씬 파일에 즉시 반영되므로, 적용 후 씬을 저장하면 영구 적용됩니다.",
     "version": "v1.0.0",
     "category": "Unity 툴",
-    "url": "https://eden-world.net/ko/market/1906",
+    "url": "https://drive.google.com/drive/folders/1djeYI92Qa3c7x3ta1cEbcSQMprQT6-IH?usp=sharing",
     "fileName": null,
     "fileData": null,
     "thumb": "images/up_1784643990568_1.webp"
@@ -1511,12 +1554,13 @@ let dlItems = [
     "desc": "캐릭터를 불러오고, 포즈와 배경을 골라서, 원하는 구도로 사진을 찍는 프로그램입니다.\n\n# 1. 캐릭터 불러오기\n* **\"VSFAvatar 불러오기\"** 버튼 클릭 → `.vsfavatar` 파일 선택\n* 또는 프로그램 창에 `.vsfavatar` 파일을 직접 드래그&드롭\n* 불러올 VSFAvatar에는 아무런 애니메이션(옷장 또는 단축키)이 없어야 합니다.\n\n불러오면 캐릭터가 화면 정면에 자동으로 나타납니다. 다른 캐릭터를 다시 불러오면 이전 캐릭터는 자동으로 사라집니다.\n\n# 2. 배경 이미지 불러오기\n* **\"배경 이미지 불러오기\"** 버튼 클릭 → `.png` / `.jpg` 파일 선택\n* 캐릭터보다 항상 뒤쪽에 배치되어 캐릭터를 가리지 않습니다.\n\n**이미지 회전**\n\"이미지 회전하기\" 버튼을 누르면 90도씩 시계 방향으로 돌아갑니다.\n\n# 3. 캐릭터/이미지 조작하기\n* **좌클릭 드래그** (대상 위에서) — 이동\n* **우클릭 드래그** (캐릭터만) — 좌우 회전\n* **우클릭 드래그 + `Space`** (캐릭터만) — 좌우 + 위아래 대각선 회전\n* **마우스 스크롤** (대상 위에서) — 확대/축소\n\n**고정하기**\n움직임을 막고 싶을 때:\n* \"모델 고정하기\" / \"이미지 고정하기\" 클릭 → 버튼 텍스트가 **\"해제하기\"**로 바뀌고 조작이 잠깁니다.\n* 다시 클릭하면 원래대로 풀립니다.\n\n# 4. 포즈 적용하기\n화면 한쪽의 포즈 목록에서 원하는 포즈를 클릭하면 캐릭터에 바로 적용됩니다.\n\n**포즈 초기화**\n\"포즈 초기화\" 버튼을 누르면 캐릭터를 처음 불러왔을 때의 포즈 + 위치 + 회전으로 한꺼번에 되돌립니다.\n\n**새 포즈 추가하기**\nUnity를 켤 필요 없이, 이 프로그램에서 바로 `.anim` 파일을 포즈로 변환할 수 있습니다.\n1. \"포즈(.anim) 변환해서 추가\" 버튼 클릭\n2. 변환할 `.anim` 파일들을 선택 (`Ctrl` 또는 `Shift`로 여러 개 동시 선택 가능)\n3. 자동으로 변환되어 포즈 목록에 나타남\n\n# 5. 가이드라인 (사진 찍힐 영역)\n화면에 표시된 사각 테두리가 사진으로 찍힐 영역입니다. 캐릭터나 배경이 이 테두리를 벗어나 있어도 상관없지만, 사진에는 테두리 안쪽만 담깁니다.\n\n**가이드라인 위치/크기 조정하기**\n1. \"가이드라인 수정\" 클릭 → 테두리 네 모서리에 파란 손잡이가 나타남\n2. 모서리 손잡이를 드래그 → 그 방향으로 크기 조절\n3. 테두리 안쪽 빈 공간을 드래그 → 전체 위치 이동\n4. \"수정 완료\" 클릭 → 손잡이가 사라지고 그 상태로 확정\n\n# 6. 사진찍기\n1. 캐릭터/배경/구도를 원하는 대로 맞춘 뒤 \"사진찍기\" 클릭\n2. \"저장하기\" 클릭 → 저장 위치, 파일명, 형식(PNG 또는 JPEG)을 창에서 직접 선택\n3. 마음에 안 들면 **\"취소\"**로 저장 없이 닫을 수 있습니다",
     "version": "v1.0.0",
     "category": "기타",
-    "url": "https://eden-world.net/ko/market/1908",
+    "url": "https://drive.google.com/drive/folders/1fRBqn3zWkv-BuaBMQiyXxcLP0bNXqrZU?usp=sharing",
     "fileName": null,
     "fileData": null,
     "thumb": "images/up_1786471737609_1.webp"
   }
 ];
+let motItems = [];
 // <!--SITE_DATA_END-->
 
 let FILES = {};
@@ -1633,20 +1677,51 @@ function shopCardHtml(v, i) {
   const media = th
     ? `<div class="shop-thumb" ${thumbClick}>${th}<div class="sale-badge">FOR SALE</div>${playBtn}<button class="del-btn" onclick="event.stopPropagation();del(${i},'s')">✕</button></div>`
     : `<div class="shop-thumb" ${thumbClick}><div class="shop-placeholder">🎥</div><div class="sale-badge">FOR SALE</div>${playBtn}<button class="del-btn" onclick="event.stopPropagation();del(${i},'s')">✕</button></div>`;
-  const action = v.buyLink
-    ? `href="${esc(v.buyLink)}" target="_blank"`
-    : `href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent(v.title+' 구매 문의')}"`;
-  return `<div class="shop-card">
-    ${media}
+
+  // buyLink이 실제 URL이면 링크 버튼, 디스코드 아이디 같은 일반 텍스트면 복사 버튼으로 동작
+  const isUrl = v.buyLink && /^https?:\/\//i.test(v.buyLink);
+  let buyBtnHtml;
+  if (isUrl) {
+    buyBtnHtml = `<a class="buy-btn" href="${esc(v.buyLink)}" target="_blank">구매하기</a>`;
+  } else if (v.buyLink) {
+    buyBtnHtml = `<button class="buy-btn" style="border:none" onclick="event.stopPropagation();copyBuyContact('${esc(v.buyLink).replace(/'/g, "\\'")}')">💬 ${esc(v.buyLink)}</button>`;
+  } else {
+    buyBtnHtml = `<a class="buy-btn" href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent(v.title+' 구매 문의')}">문의하기</a>`;
+  }
+
+  return `<div class="shop-card" id="shop-card-${v.id}">    ${media}
     <div class="shop-info">
       <div class="shop-title">${esc(v.title)}</div>
       <div class="shop-desc">${esc(v.desc||'')}</div>
       <div class="shop-foot">
         <div class="shop-price">${Number(v.price).toLocaleString()}원</div>
-        <a class="buy-btn" ${action}>${v.buyLink?'구매하기':'문의하기'}</a>
+        ${buyBtnHtml}
       </div>
     </div>
   </div>`;
+}
+
+function copyBuyContact(text) {
+  const done = () => toast(`복사됐어요: ${text} (디스코드에 붙여넣어 문의해주세요)`);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(done);
+  } else {
+    done();
+  }
+}
+
+// 모션 항목에서 연결된 특정 판매 영상으로 이동 + 강조
+function goToLinkedShop(shopId) {
+  showPage('shop');
+  setTimeout(() => {
+    const el = document.getElementById('shop-card-' + shopId);
+    if (!el) { toast('연결된 영상을 찾을 수 없어요 (삭제되었을 수 있어요)'); return; }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.style.transition = 'box-shadow .3s, border-color .3s';
+    el.style.boxShadow = '0 0 0 4px rgba(232,120,154,.35), 0 16px 40px rgba(232,120,154,.3)';
+    el.style.borderColor = 'var(--pink)';
+    setTimeout(() => { el.style.boxShadow = ''; el.style.borderColor = ''; }, 2200);
+  }, 80);
 }
 
 // ─── 페이지 전환 ─────────────────────────────────────────
@@ -1656,6 +1731,7 @@ function showPage(page) {
   document.getElementById('pagePortfolio').classList.remove('active');
   document.getElementById('pageShop').classList.remove('active');
   document.getElementById('pageBg').classList.remove('active');
+  document.getElementById('pageMot').classList.remove('active');
   document.getElementById('pageDl').classList.remove('active');
   if (page === 'portfolio') {
     renderPortfolioFull();
@@ -1670,6 +1746,11 @@ function showPage(page) {
   } else if (page === 'bg') {
     renderBgGrid();
     document.getElementById('pageBg').classList.add('active');
+    document.querySelectorAll(HOME_ELS).forEach(el => el.style.display = 'none');
+    window.scrollTo(0, 0);
+  } else if (page === 'mot') {
+    renderMotList();
+    document.getElementById('pageMot').classList.add('active');
     document.querySelectorAll(HOME_ELS).forEach(el => el.style.display = 'none');
     window.scrollTo(0, 0);
   } else if (page === 'dl') {
@@ -1977,6 +2058,170 @@ function moveBgLightbox(dir) {
   refreshBgLightbox();
 }
 
+// ─── 모션 리스트 ──────────────────────────────────────────
+let motEditIdx = null;
+let motFormSale = false;
+
+// ─── 판매 영상: 구매 링크 기본값(디스코드) 자동 채우기 ───
+function prefillBuyContact() {
+  const el = document.getElementById('sBuy');
+  if (el && !el.value.trim() && CFG.email) el.value = CFG.email;
+}
+
+function toggleMotFormSale() {
+  motFormSale = !motFormSale;
+  const btn = document.getElementById('motHasSaleToggleBtn');
+  btn.textContent = motFormSale ? 'ON' : 'OFF';
+  btn.style.background = motFormSale ? 'var(--pink)' : 'var(--surface2)';
+  btn.style.color = motFormSale ? '#fff' : 'var(--muted)';
+  const wrap = document.getElementById('motLinkedShopWrap');
+  if (wrap) {
+    wrap.style.display = motFormSale ? 'block' : 'none';
+    if (motFormSale) renderMotShopOptions();
+  }
+}
+
+// 판매 영상 드롭다운 옵션을 현재 shop 목록으로 갱신
+function renderMotShopOptions(selectedId) {
+  const sel = document.getElementById('motLinkedShop');
+  if (!sel) return;
+  const current = selectedId !== undefined ? selectedId : sel.value;
+  sel.innerHTML = '<option value="">선택 안 함 (판매 영상 전체 페이지로 이동)</option>' +
+    shop.map(s => `<option value="${s.id}">${esc(s.title)} (${Number(s.price).toLocaleString()}원)</option>`).join('');
+  sel.value = current !== undefined && current !== null ? String(current) : '';
+}
+
+function addMotItem() {
+  const title     = document.getElementById('motTitle').value.trim();
+  const extraCost = document.getElementById('motExtraCost').value === '1';
+  const remaining = document.getElementById('motRemaining').value.trim();
+  if (!title) { toast('모션 제목을 입력해주세요'); return; }
+
+  const linkedRaw = document.getElementById('motLinkedShop').value;
+  const linkedShopId = (motFormSale && linkedRaw) ? Number(linkedRaw) : null;
+
+  const isEdit = motEditIdx !== null;
+  const item = {
+    id: isEdit ? motItems[motEditIdx].id : Date.now(),
+    title,
+    extraCost,
+    remaining: remaining === '' ? null : Number(remaining),
+    hasSale: motFormSale,
+    linkedShopId
+  };
+  if (isEdit) motItems[motEditIdx] = item; else motItems.push(item);
+
+  renderMotList(); renderMotAdminList();
+  resetMotForm();
+  toast(isEdit ? `"${title}" 수정됐어요 ✓` : `"${title}" 추가됐어요 ✓`);
+}
+
+function resetMotForm() {
+  document.getElementById('motTitle').value = '';
+  document.getElementById('motExtraCost').value = '0';
+  document.getElementById('motRemaining').value = '';
+  motFormSale = false;
+  const btn = document.getElementById('motHasSaleToggleBtn');
+  btn.textContent = 'OFF';
+  btn.style.background = 'var(--surface2)';
+  btn.style.color = 'var(--muted)';
+  document.getElementById('motLinkedShopWrap').style.display = 'none';
+  document.getElementById('motLinkedShop').value = '';
+  motEditIdx = null;
+  document.getElementById('motSubmitBtn').textContent = '+ 모션 추가';
+  document.getElementById('motCancelEditBtn').style.display = 'none';
+}
+
+function editMotItem(idx) {
+  const v = motItems[idx];
+  if (!v) return;
+  motEditIdx = idx;
+  document.getElementById('motTitle').value = v.title || '';
+  document.getElementById('motExtraCost').value = v.extraCost ? '1' : '0';
+  document.getElementById('motRemaining').value = (v.remaining === null || v.remaining === undefined) ? '' : v.remaining;
+  motFormSale = !!v.hasSale;
+  const btn = document.getElementById('motHasSaleToggleBtn');
+  btn.textContent = motFormSale ? 'ON' : 'OFF';
+  btn.style.background = motFormSale ? 'var(--pink)' : 'var(--surface2)';
+  btn.style.color = motFormSale ? '#fff' : 'var(--muted)';
+  const wrap = document.getElementById('motLinkedShopWrap');
+  wrap.style.display = motFormSale ? 'block' : 'none';
+  if (motFormSale) renderMotShopOptions(v.linkedShopId);
+  document.getElementById('motSubmitBtn').textContent = '✓ 수정 완료';
+  document.getElementById('motCancelEditBtn').style.display = 'block';
+  toast('내용을 고친 뒤 "수정 완료"를 눌러주세요');
+  document.getElementById('motTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function cancelMotEdit() {
+  resetMotForm();
+}
+
+function delMotItem(idx) {
+  motItems.splice(idx, 1);
+  if (motEditIdx === idx) resetMotForm();
+  else if (motEditIdx !== null && motEditIdx > idx) motEditIdx--;
+  renderMotList(); renderMotAdminList();
+  toast('삭제됐어요');
+}
+
+// 목록에서 태그를 바로 켜고 끄기
+function toggleMotSaleTag(idx) {
+  motItems[idx].hasSale = !motItems[idx].hasSale;
+  renderMotList(); renderMotAdminList();
+  toast(motItems[idx].hasSale ? '태그 추가됨 🏷️' : '태그 제거됨');
+}
+
+function renderMotAdminList() {
+  const el = document.getElementById('motAdminList');
+  if (!el) return;
+  if (!motItems.length) {
+    el.innerHTML = '<p style="font-size:12px;color:var(--muted);padding:8px">등록된 모션이 없어요</p>';
+    return;
+  }
+  el.innerHTML = motItems.map((v, i) => {
+    const linked = v.linkedShopId ? shop.find(s => s.id === v.linkedShopId) : null;
+    return `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap">
+      <div style="min-width:0;flex:1">
+        <p style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.title)}</p>
+        <p style="font-size:10px;color:var(--muted)">${v.extraCost ? '추가비용 있음' : '추가비용 없음'} · 남은 제작 ${v.remaining === null || v.remaining === undefined ? '-' : v.remaining}회${linked ? ` · 🔗 ${esc(linked.title)}` : (v.hasSale ? ' · 🔗 미연결(전체 페이지로 이동)' : '')}</p>
+      </div>
+      <button onclick="toggleMotSaleTag(${i})" style="flex-shrink:0;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid ${v.hasSale ? 'var(--pink)' : 'var(--border)'};background:${v.hasSale ? 'var(--pink)' : 'var(--surface2)'};color:${v.hasSale ? '#fff' : 'var(--muted)'}">🏷️ ${v.hasSale ? 'ON' : 'OFF'}</button>
+      <button onclick="editMotItem(${i})" style="flex-shrink:0;background:var(--pink-pale);border:1px solid var(--border2);color:var(--pink);padding:4px 12px;border-radius:8px;font-size:11px;cursor:pointer">수정</button>
+      <button onclick="delMotItem(${i})" style="flex-shrink:0;background:rgba(224,85,85,.15);border:1px solid #e05555;color:#e05555;padding:4px 12px;border-radius:8px;font-size:11px;cursor:pointer">삭제</button>
+    </div>`;
+  }).join('');
+}
+
+function renderMotList() {
+  const g = document.getElementById('motList');
+  if (!g) return;
+  if (!motItems.length) {
+    g.innerHTML = `<div class="empty"><div class="empty-icon">🎵</div><p class="empty-text">관리자 패널에서 모션을 추가해보세요</p></div>`;
+    return;
+  }
+  g.innerHTML = motItems.map((v, i) => {
+    const clickable = !!v.hasSale;
+    const clickAction = v.linkedShopId ? `goToLinkedShop(${v.linkedShopId})` : `showPage('shop')`;
+    return `
+    <div ${clickable ? `onclick="${clickAction}" style="cursor:pointer"` : ''}
+      onmouseover="${clickable ? "this.style.borderColor='var(--pink-light)';this.style.boxShadow='0 8px 24px rgba(232,120,154,.15)'" : ''}"
+      onmouseout="${clickable ? "this.style.borderColor='var(--border)';this.style.boxShadow='none'" : ''}"
+      style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;transition:border-color .2s,box-shadow .2s">
+      <div style="min-width:0;flex:1">
+        <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text)">${esc(v.title)}</p>
+        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">${v.extraCost ? '💰 추가비용 있음' : '추가비용 없음'}</span>
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">남은 제작 ${v.remaining === null || v.remaining === undefined ? '-' : v.remaining}회</span>
+          ${clickable ? `<span style="font-size:11px;font-weight:700;color:#fff;background:var(--pink);padding:3px 11px;border-radius:12px">🏷️ 판매 영상 제작 내역있음</span>` : ''}
+        </div>
+      </div>
+      ${clickable ? `<span style="font-size:12px;color:var(--pink);font-weight:600;flex-shrink:0">보러가기 →</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
 // ─── 렌더 포트폴리오 (메인: 3개) ─────────────────────────
 function renderPortfolio() {
   const g = document.getElementById('portfolioGrid');
@@ -2253,6 +2498,7 @@ async function addItem(type) {
     document.getElementById('sDesc').value = '';
     document.getElementById('sPrice').value = '';
     document.getElementById('sBuy').value = '';
+    prefillBuyContact();
     document.getElementById('sYt').value = '';
     document.getElementById('sPath').value = '';
     document.getElementById('sLabel').textContent = '파일을 드래그하거나 클릭해서 선택';
@@ -2319,14 +2565,15 @@ function logout() {
 function tab(name) {
   document.querySelectorAll('.atab').forEach((t, i) => {
     t.classList.remove('active');
-    if (['p','s','bg','dl','set'][i] === name) t.classList.add('active');
+    if (['p','s','bg','mot','dl','set'][i] === name) t.classList.add('active');
   });
   document.querySelectorAll('.asec').forEach(s => s.classList.remove('active'));
   document.getElementById('sec-' + name).classList.add('active');
   if (name === 'set') { loadSettingsForm(); loadGithubConfig(); }
   if (name === 'p') renderReorder('p');
-  if (name === 's') renderReorder('s');
+  if (name === 's') { renderReorder('s'); prefillBuyContact(); }
   if (name === 'bg') renderBgAdminList();
+  if (name === 'mot') renderMotAdminList();
   if (name === 'dl') renderDlAdminList();
 }
 
@@ -3075,6 +3322,7 @@ let shop = ${JSON.stringify(sData, null, 2)};
 let bgItems = ${JSON.stringify(bgItems, null, 2)};
 let shopComingSoonOn = ${shopComingSoonOn};
 let dlItems = ${JSON.stringify(dlItems, null, 2)};
+let motItems = ${JSON.stringify(motItems, null, 2)};
 // <!--SITE_DATA_END-->`;
 
   html = html.replace(/\/\/ <!--SITE_DATA_START-->[\s\S]*?\/\/ <!--SITE_DATA_END-->/, inject);
