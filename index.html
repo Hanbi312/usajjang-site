@@ -671,7 +671,14 @@ textarea{resize:vertical;min-height:88px}
               <option value="1">있음</option>
             </select>
           </div>
-          <div class="fg" style="margin:0"><label>남은 제작 횟수</label><input type="number" id="motRemaining" placeholder="예: 3" min="0"></div>
+          <div class="fg" style="margin:0">
+            <label>남은 제작 횟수</label>
+            <input type="number" id="motRemaining" placeholder="예: 3" min="0">
+            <label style="display:flex;align-items:center;gap:6px;margin-top:8px;text-transform:none;font-size:12px;color:var(--text);cursor:pointer">
+              <input type="checkbox" id="motUnlimited" onchange="toggleMotUnlimited()" style="width:14px;height:14px;accent-color:var(--pink);cursor:pointer">
+              ∞ 무제한
+            </label>
+          </div>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;background:var(--pink-pale);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;margin-top:16px">
@@ -1142,21 +1149,7 @@ let portfolio = [
     "thumb": "images/up_1784999475400_2.webp"
   }
 ];
-let shop = [
-  {
-    "id": 1787252739845,
-    "title": "테스트",
-    "desc": "태ㅔㅅ,ㅌ,",
-    "price": "50000",
-    "buyLink": "usagi_0423",
-    "ytUrl": null,
-    "filePath": null,
-    "videoId": null,
-    "videoData": null,
-    "videoName": null,
-    "thumb": null
-  }
-];
+let shop = [];
 let bgItems = [
   {
     "id": 1778410084466,
@@ -1574,16 +1567,7 @@ let dlItems = [
     "thumb": "images/up_1786471737609_1.webp"
   }
 ];
-let motItems = [
-  {
-    "id": 1787252607575,
-    "title": "두번째 지구",
-    "extraCost": false,
-    "remaining": 2,
-    "hasSale": true,
-    "linkedShopId": null
-  }
-];
+let motItems = [];
 // <!--SITE_DATA_END-->
 
 let FILES = {};
@@ -2091,6 +2075,19 @@ function prefillBuyContact() {
   if (el && !el.value.trim() && CFG.email) el.value = CFG.email;
 }
 
+function motRemainingLabel(v) {
+  if (v.remaining === 'unlimited') return '무제한';
+  if (v.remaining === null || v.remaining === undefined) return '-';
+  return v.remaining + '회';
+}
+
+function toggleMotUnlimited() {
+  const checked = document.getElementById('motUnlimited').checked;
+  const input = document.getElementById('motRemaining');
+  input.disabled = checked;
+  if (checked) input.value = '';
+}
+
 function toggleMotFormSale() {
   motFormSale = !motFormSale;
   const btn = document.getElementById('motHasSaleToggleBtn');
@@ -2117,6 +2114,7 @@ function renderMotShopOptions(selectedId) {
 function addMotItem() {
   const title     = document.getElementById('motTitle').value.trim();
   const extraCost = document.getElementById('motExtraCost').value === '1';
+  const unlimited = document.getElementById('motUnlimited').checked;
   const remaining = document.getElementById('motRemaining').value.trim();
   if (!title) { toast('모션 제목을 입력해주세요'); return; }
 
@@ -2128,7 +2126,7 @@ function addMotItem() {
     id: isEdit ? motItems[motEditIdx].id : Date.now(),
     title,
     extraCost,
-    remaining: remaining === '' ? null : Number(remaining),
+    remaining: unlimited ? 'unlimited' : (remaining === '' ? null : Number(remaining)),
     hasSale: motFormSale,
     linkedShopId
   };
@@ -2143,6 +2141,8 @@ function resetMotForm() {
   document.getElementById('motTitle').value = '';
   document.getElementById('motExtraCost').value = '0';
   document.getElementById('motRemaining').value = '';
+  document.getElementById('motRemaining').disabled = false;
+  document.getElementById('motUnlimited').checked = false;
   motFormSale = false;
   const btn = document.getElementById('motHasSaleToggleBtn');
   btn.textContent = 'OFF';
@@ -2161,7 +2161,10 @@ function editMotItem(idx) {
   motEditIdx = idx;
   document.getElementById('motTitle').value = v.title || '';
   document.getElementById('motExtraCost').value = v.extraCost ? '1' : '0';
-  document.getElementById('motRemaining').value = (v.remaining === null || v.remaining === undefined) ? '' : v.remaining;
+  const isUnlimited = v.remaining === 'unlimited';
+  document.getElementById('motUnlimited').checked = isUnlimited;
+  document.getElementById('motRemaining').disabled = isUnlimited;
+  document.getElementById('motRemaining').value = isUnlimited ? '' : ((v.remaining === null || v.remaining === undefined) ? '' : v.remaining);
   motFormSale = !!v.hasSale;
   const btn = document.getElementById('motHasSaleToggleBtn');
   btn.textContent = motFormSale ? 'ON' : 'OFF';
@@ -2208,7 +2211,7 @@ function renderMotAdminList() {
     <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap">
       <div style="min-width:0;flex:1">
         <p style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.title)}</p>
-        <p style="font-size:10px;color:var(--muted)">${v.extraCost ? '추가비용 있음' : '추가비용 없음'} · 남은 제작 ${v.remaining === null || v.remaining === undefined ? '-' : v.remaining}회${linked ? ` · 🔗 ${esc(linked.title)}` : (v.hasSale ? ' · 🔗 미연결(전체 페이지로 이동)' : '')}</p>
+        <p style="font-size:10px;color:var(--muted)">${v.extraCost ? '추가비용 있음' : '추가비용 없음'} · 남은 제작 ${motRemainingLabel(v)}${linked ? ` · 🔗 ${esc(linked.title)}` : (v.hasSale ? ' · 🔗 미연결(전체 페이지로 이동)' : '')}</p>
       </div>
       <button onclick="toggleMotSaleTag(${i})" style="flex-shrink:0;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid ${v.hasSale ? 'var(--pink)' : 'var(--border)'};background:${v.hasSale ? 'var(--pink)' : 'var(--surface2)'};color:${v.hasSale ? '#fff' : 'var(--muted)'}">🏷️ ${v.hasSale ? 'ON' : 'OFF'}</button>
       <button onclick="editMotItem(${i})" style="flex-shrink:0;background:var(--pink-pale);border:1px solid var(--border2);color:var(--pink);padding:4px 12px;border-radius:8px;font-size:11px;cursor:pointer">수정</button>
@@ -2228,15 +2231,16 @@ function renderMotList() {
     const clickable = !!v.hasSale;
     const clickAction = v.linkedShopId ? `goToLinkedShop(${v.linkedShopId})` : `showPage('shop')`;
     return `
-    <div ${clickable ? `onclick="${clickAction}" style="cursor:pointer"` : ''}
+    <div ${clickable ? `onclick="${clickAction}" style="cursor:pointer;position:relative"` : `style="position:relative"`}
       onmouseover="${clickable ? "this.style.borderColor='var(--pink-light)';this.style.boxShadow='0 8px 24px rgba(232,120,154,.15)'" : ''}"
       onmouseout="${clickable ? "this.style.borderColor='var(--border)';this.style.boxShadow='none'" : ''}"
-      style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;transition:border-color .2s,box-shadow .2s">
+      style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;transition:border-color .2s,box-shadow .2s;position:relative">
+      <button class="del-btn" onclick="event.stopPropagation();delMotItem(${i})">✕</button>
       <div style="min-width:0;flex:1">
         <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text)">${esc(v.title)}</p>
         <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
           <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">${v.extraCost ? '💰 추가비용 있음' : '추가비용 없음'}</span>
-          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">남은 제작 ${v.remaining === null || v.remaining === undefined ? '-' : v.remaining}회</span>
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 11px;border-radius:12px">남은 제작 ${motRemainingLabel(v)}</span>
           ${clickable ? `<span style="font-size:11px;font-weight:700;color:#fff;background:var(--pink);padding:3px 11px;border-radius:12px">🏷️ 판매 영상 제작 내역있음</span>` : ''}
         </div>
       </div>
